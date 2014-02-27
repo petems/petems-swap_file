@@ -2,7 +2,7 @@
 class swap_file (
     $ensure         = 'present',
     $swapfile       = '/mnt/swap.1',
-    $swapfilesize   = $::memorysizeinbytes/1000000
+    $swapfilesize   = to_bytes($::memorysize) / 1000000
 ) inherits swap_file::params {
     if $ensure == 'present' {
         exec { 'Create swap file':
