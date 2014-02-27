@@ -21,14 +21,26 @@ describe 'swap_file' do
     end
   end
 
-  context 'unsupported operating system' do
-    describe 'swap_file class without any parameters on Solaris/Nexenta' do
+  context 'not officially support operating system' do
+    describe 'Solaris Nexenta system without any parameters' do
+      let(:facts) {{
+        :osfamily        => 'Solaris',
+        :operatingsystem => 'Nexenta',
+        :memorysizeinbytes => 1073741824,
+      }}
+
+      it { should contain_class('swap_file') }
+    end
+  end
+
+  context 'windows operating system' do
+    describe 'swap_file class without any parameters on Windows' do
       let(:facts) {{
         :osfamily        => 'windows',
         :operatingsystem => 'windows',
       }}
 
-      it { expect { should contain_class('swap_file') }.to raise_error(Puppet::Error, /windows not supported/) }
+      it { expect { should contain_class('swap_file') }.to raise_error(Puppet::Error, /Swap files dont work on windows/) }
     end
   end
 end

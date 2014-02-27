@@ -11,8 +11,11 @@ class swap_file::params {
     'RedHat': {
 
     }
+    'windows': {
+      fail("Swap files dont work on windows")
+    }
     default: {
-      fail("${::operatingsystem} not supported")
+      warning("${::operatingsystem} not officially supported, but should work")
     }
   }
 }
