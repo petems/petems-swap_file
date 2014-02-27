@@ -12,7 +12,7 @@ class swap_file::params {
 
     }
     'windows': {
-      fail("Swap files dont work on windows")
+      fail('Swap files dont work on windows')
     }
     default: {
       warning("${::operatingsystem} not officially supported, but should work")
