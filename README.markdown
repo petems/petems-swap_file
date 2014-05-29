@@ -12,7 +12,7 @@
 
 ##Overview
 
-Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environments.
+Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environments. This is based on the gist by @Yggdrasil, with a few changes and added specs.
 
 ##Setup
 
