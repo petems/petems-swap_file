@@ -1,5 +1,5 @@
 name          'petems-swap_file'
-version '0.1.1'
+version       '0.1.1'
 source        'git://github.com/petems/puppet-swap_file.git'
 author        'petems'
 license       'Apache License, Version 2.0'
