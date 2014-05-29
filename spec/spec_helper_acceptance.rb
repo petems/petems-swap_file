@@ -1,10 +1,17 @@
-require 'beaker-rspec/spec_helper'
-require 'beaker-rspec/helpers/serverspec'
+require 'beaker-rspec'
 
-hosts.each do |host|
-  # Install Puppet
-  install_puppet
+unless ENV['RS_PROVISION'] == 'no'
+  hosts.each do |host|
+    if host.is_pe?
+      install_pe
+    else
+      install_puppet
+      on host, "mkdir -p #{host['distmoduledir']}"
+    end
+  end
 end
+
+UNSUPPORTED_PLATFORMS = ['windows']
 
 RSpec.configure do |c|
   # Project root
@@ -18,7 +25,8 @@ RSpec.configure do |c|
     # Install module and dependencies
     puppet_module_install(:source => proj_root, :module_name => 'swap_file')
     hosts.each do |host|
-      on host, puppet('module', 'install', 'puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
+      shell('/bin/touch /etc/puppet/hiera.yaml')
+      shell('puppet module install puppetlabs-stdlib --version 3.2.0', { :acceptable_exit_codes => [0,1] })
     end
   end
 end
