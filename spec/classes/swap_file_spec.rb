@@ -15,7 +15,8 @@ describe 'swap_file' do
         it { should contain_class('Swap_file::Params') }
         it { should contain_class('Swap_file') }
 
-        it { should contain_exec('Create swap file').
+        it {
+            should contain_exec('Create swap file').
               with_command('/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=1040')
             }
         it { should contain_exec('Attach swap file') }
