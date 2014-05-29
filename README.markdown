@@ -5,7 +5,6 @@
 3. [Setup - The basics of getting started with swap_file](#setup)
     * [What swap_file affects](#what-swap_file-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with swap_file](#beginning-with-swap_file)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
@@ -13,29 +12,24 @@
 
 ##Overview
 
-Manage swap files for your Linux environments.
+Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environments.
 
 ##Setup
 
 ###What swap_file affects
 
-* A list of files, packages, services, or operations that the module will alter, impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
-
-###Beginning with swap_file
-
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you may wish to include an additional section here: Upgrading (For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+* Swapfiles on the system
+* Any mounts of swapfiles
 
 ##Usage
 
-By default, it will create a swap file under `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes` fact divided by 1000000.
+The simplest use of the module is this:
 
 ```puppet
 include swap
 ```
+
+By default, the module it will create a swap file under `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes` fact divided by 1000000.
 
 For a custom setup, you can do something like this:
 
