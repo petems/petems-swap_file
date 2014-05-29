@@ -8,15 +8,8 @@
 # [*swapfile*]
 #   Location of swapfile, defaults to /mnt
 # [*swapfilesize*]
-#   Size of the swapfile in MB. Defaults to $::memorysize fact on the node
-#
-# Actions:
-#   Creates and mounts a swapfile.
-#   Umounts and removes a swapfile.
-#
-# Requires:
-#   memorysizeinbytes fact - See:
-#   https://blog.kumina.nl/2011/03/facter-facts-for-memory-in-bytes/
+#   Size of the swapfile as a string (eg. 10 MB, 1.2 GB).
+#   Defaults to $::memorysize fact on the node
 #
 # == Examples
 #
@@ -34,14 +27,16 @@
 # == Authors
 #    @petems - Peter Souter
 #    @Yggdrasil
+#
 class swap_file (
   $ensure        = 'present',
   $swapfile      = '/mnt/swap.1',
-  $swapfilesize  = to_bytes($::memorysize) / 1000000
+  $swapfilesize  = $::memorysize,
 ) inherits swap_file::params {
+  $swapfilesize_bytes = to_bytes($swapfilesize) / 1000000
   if $ensure == 'present' {
       exec { 'Create swap file':
-        command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize}",
+        command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_bytes}",
         creates => $swapfile,
       }
       exec { 'Attach swap file':
