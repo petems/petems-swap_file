@@ -7,4 +7,4 @@ summary       'Swap file management with Puppet'
 description   'Create swap files for Linux systems with Puppet'
 project_page  'https://github.com/petems/puppet-swap_file'
 
-dependency 'puppetlabs/stdlib'
+dependency 'puppetlabs/stdlib', '>= 3.2.0'
