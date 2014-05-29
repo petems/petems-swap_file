@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'swap_file', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
 
-  context 'apt::source' do
+  context 'swap_file' do
     context 'ensure => present' do
       it 'should work with no errors' do
         pp = <<-EOS
