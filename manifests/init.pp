@@ -33,10 +33,10 @@ class swap_file (
   $swapfile      = '/mnt/swap.1',
   $swapfilesize  = $::memorysize,
 ) inherits swap_file::params {
-  $swapfilesize_bytes = to_bytes($swapfilesize) / 1000000
+  $swapfilesize_mb = to_bytes($swapfilesize) / 1000000
   if $ensure == 'present' {
       exec { 'Create swap file':
-        command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_bytes}",
+        command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
         creates => $swapfile,
       }
       exec { 'Attach swap file':
