@@ -42,6 +42,25 @@ describe 'swap_file' do
 
         it { should contain_mount('swap').with_ensure('present') }
       end
+       describe "can specify no mount for swapfile" do
+        let(:params) {{ :add_mount => false, }}
+        let(:facts) {{
+          :osfamily => osfamily,
+        }}
+
+        it { should compile.with_all_deps }
+
+        it { should contain_class('Swap_file::Params') }
+        it { should contain_class('Swap_file') }
+
+        it {
+            should contain_exec('Create swap file').
+              with_command('/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=0')
+            }
+        it { should contain_exec('Attach swap file') }
+
+        it { should_not contain_mount('swap').with_ensure('present') }
+      end
     end
   end
 
