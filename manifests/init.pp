@@ -60,6 +60,7 @@ class swap_file (
     }
     file { $swapfile:
       ensure  => absent,
+      backup  => false,
       require => Exec['Detach swap file'],
     }
     mount { 'swap':
