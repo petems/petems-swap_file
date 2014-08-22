@@ -32,6 +32,7 @@ class swap_file (
   $ensure        = 'present',
   $swapfile      = '/mnt/swap.1',
   $swapfilesize  = $::memorysize,
+  $add_mount     = true
 ) inherits swap_file::params {
   $swapfilesize_mb = to_bytes($swapfilesize) / 1000000
   if $ensure == 'present' {
@@ -44,13 +45,15 @@ class swap_file (
         require => Exec['Create swap file'],
         unless  => "/sbin/swapon -s | grep ${swapfile}",
       }
-      mount { 'swap':
-        ensure  => present,
-        fstype  => swap,
-        device  => $swapfile,
-        dump    => 0,
-        pass    => 0,
-        require => Exec['Attach swap file'],
+      if $add_mount {
+        mount { 'swap':
+          ensure  => present,
+          fstype  => swap,
+          device  => $swapfile,
+          dump    => 0,
+          pass    => 0,
+          require => Exec['Attach swap file'],
+        }
       }
     }
   elsif $ensure == 'absent' {
