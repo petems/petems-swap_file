@@ -20,6 +20,8 @@ describe 'swap_file' do
             }
 
         it { should contain_exec('Attach swap file') }
+
+        it { should contain_mount('swap').with_ensure('present') }
       end
       describe "swap_file class with parameters on #{osfamily}" do
         let(:params) {{ :swapfile => '/foo/bar', :swapfilesize => '1 GB' }}
@@ -37,6 +39,8 @@ describe 'swap_file' do
               with_command('/bin/dd if=/dev/zero of=/foo/bar bs=1M count=1073')
             }
         it { should contain_exec('Attach swap file') }
+
+        it { should contain_mount('swap').with_ensure('present') }
       end
     end
   end
@@ -60,6 +64,8 @@ describe 'swap_file' do
           }
 
       it { should contain_exec('Attach swap file') }
+
+      it { should contain_mount('swap').with_ensure('present') }
     end
   end
 

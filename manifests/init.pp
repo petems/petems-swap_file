@@ -44,6 +44,14 @@ class swap_file (
         require => Exec['Create swap file'],
         unless  => "/sbin/swapon -s | grep ${swapfile}",
       }
+      mount { 'swap':
+        ensure  => present,
+        fstype  => swap,
+        device  => $swapfile,
+        dump    => 0,
+        pass    => 0,
+        require => Exec['Attach swap file'],
+      }
     }
   elsif $ensure == 'absent' {
     exec { 'Detach swap file':
@@ -53,6 +61,11 @@ class swap_file (
     file { $swapfile:
       ensure  => absent,
       require => Exec['Detach swap file'],
+    }
+    mount { 'swap':
+      ensure  => absent,
+      device  => $swapfile,
+      require => File[$swapfile],
     }
   }
 }
