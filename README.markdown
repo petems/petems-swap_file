@@ -26,7 +26,7 @@ Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environm
 The simplest use of the module is this:
 
 ```puppet
-include swap
+include swap_file
 ```
 
 By default, the module it will create a swap file under `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes` fact divided by 1000000.
@@ -34,7 +34,7 @@ By default, the module it will create a swap file under `/mnt/swap.1` with the d
 For a custom setup, you can do something like this:
 
 ```puppet
-swap {
+class { 'swap_file':
   swapfile     => '/swapfile/swap1',
   swapfilesize => '1000000'
 }
@@ -43,7 +43,7 @@ swap {
 To remove a prexisting swap, you can use ensure absent:
 
 ```puppet
-swap {
+class { 'swap_file':
   ensure   => 'absent'
   swapfile => '/swapfile/swap1',
 }
