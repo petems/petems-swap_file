@@ -34,7 +34,13 @@ class swap_file (
   $swapfilesize  = $::memorysize,
   $add_mount     = true
 ) inherits swap_file::params {
+
+  # Parameter validation
+  validate_re($ensure, ['^absent$', '^present$'], "Invalid ensure: ${ensure} - (Must be 'present' or 'absent')")
+  validate_string($swapfile)
   $swapfilesize_mb = to_bytes($swapfilesize) / 1000000
+  validate_bool($add_mount)
+
   if $ensure == 'present' {
       exec { 'Create swap file':
         command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
