@@ -9,8 +9,8 @@ begin
 rescue LoadError
 end
 
-PuppetLint.configuration.send("disable_80chars")
 PuppetLint.configuration.relative = true
+PuppetLint.configuration.send("disable_80chars")
 PuppetLint.configuration.log_format = "%{path}:%{linenumber}:%{check}:%{KIND}:%{message}"
 PuppetLint.configuration.fail_on_warnings = true
 
