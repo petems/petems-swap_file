@@ -12,8 +12,8 @@ end
 group :development do
   gem "travis"
   gem "travis-lint"
-  gem "beaker"
-  gem "beaker-rspec"
+  gem "beaker", :git => 'https://github.com/puppetlabs/beaker.git'
+  gem "beaker-rspec", :git => 'https://github.com/puppetlabs/beaker-rspec.git'
   gem "vagrant-wrapper"
   gem "puppet-blacksmith"
   gem "guard-rake"
