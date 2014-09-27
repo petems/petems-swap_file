@@ -1,0 +1,31 @@
+box: wercker-labs/docker
+build:
+  steps:
+    - install-packages:
+        packages: ruby2.0 ruby2.0-dev lxc-docker=1.2.0
+    - script:
+        name: print the docker version
+        code: docker version
+    - script:
+        name: print system-wide docker info
+        code: docker info
+    - script:
+        name: print the ruby version
+        code: ruby --version
+    - script:
+        name: install bundler
+        code: sudo gem install bundler
+    - script:
+        name: print bundler version
+        code: bundle --version
+    - bundle-install
+    - script:
+        name: build electricals centos image
+        code: |
+          pushd electrical
+          docker build --rm -t electrical/centos:6.4 .
+          popd
+    - script:
+        name: run the test suite
+        code: |
+          BEAKER_set=centos-64-x64-docker bundle exec rspec spec/acceptance/class_spec.rb
