@@ -20,13 +20,6 @@ build:
         code: bundle --version
     - bundle-install
     - script:
-        name: build electricals centos image
-        code: |
-          ls -l
-          pushd puppet-swap_file
-          docker build --rm -t electrical/centos:6.4 .
-          puppet-swap_file
-    - script:
         name: run the test suite
         code: |
           BEAKER_set=centos-64-x64-docker bundle exec rspec spec/acceptance/class_spec.rb
