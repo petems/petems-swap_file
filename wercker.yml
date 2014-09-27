@@ -22,9 +22,9 @@ build:
     - script:
         name: build electricals centos image
         code: |
-          pushd electrical
+          pushd puppet-swap_file
           docker build --rm -t electrical/centos:6.4 .
-          popd
+          puppet-swap_file
     - script:
         name: run the test suite
         code: |
