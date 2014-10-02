@@ -35,49 +35,47 @@ class swap_file (
   $add_mount     = true
 ) inherits swap_file::params {
 
-  notice('Hello world')
+  # Parameter validation
+  validate_re($ensure, ['^absent$', '^present$'], "Invalid ensure: ${ensure} - (Must be 'present' or 'absent')")
+  validate_string($swapfile)
+  $swapfilesize_mb = to_bytes($swapfilesize) / 1000000
+  validate_bool($add_mount)
 
-  # # Parameter validation
-  # validate_re($ensure, ['^absent$', '^present$'], "Invalid ensure: ${ensure} - (Must be 'present' or 'absent')")
-  # validate_string($swapfile)
-  # $swapfilesize_mb = to_bytes($swapfilesize) / 1000000
-  # validate_bool($add_mount)
-
-  # if $ensure == 'present' {
-  #     exec { 'Create swap file':
-  #       command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
-  #       creates => $swapfile,
-  #     }
-  #     exec { 'Attach swap file':
-  #       command => "/sbin/mkswap ${swapfile} && /sbin/swapon ${swapfile}",
-  #       require => Exec['Create swap file'],
-  #       unless  => "/sbin/swapon -s | grep ${swapfile}",
-  #     }
-  #     if $add_mount {
-  #       mount { 'swap':
-  #         ensure  => present,
-  #         fstype  => swap,
-  #         device  => $swapfile,
-  #         dump    => 0,
-  #         pass    => 0,
-  #         require => Exec['Attach swap file'],
-  #       }
-  #     }
-  #   }
-  # elsif $ensure == 'absent' {
-  #   exec { 'Detach swap file':
-  #     command => "/sbin/swapoff ${swapfile}",
-  #     onlyif  => "/sbin/swapon -s | grep ${swapfile}",
-  #   }
-  #   file { $swapfile:
-  #     ensure  => absent,
-  #     backup  => false,
-  #     require => Exec['Detach swap file'],
-  #   }
-  #   mount { 'swap':
-  #     ensure  => absent,
-  #     device  => $swapfile,
-  #     require => File[$swapfile],
-  #   }
-  # }
+  if $ensure == 'present' {
+      exec { 'Create swap file':
+        command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
+        creates => $swapfile,
+      }
+      exec { 'Attach swap file':
+        command => "/sbin/mkswap ${swapfile} && /sbin/swapon ${swapfile}",
+        require => Exec['Create swap file'],
+        unless  => "/sbin/swapon -s | grep ${swapfile}",
+      }
+      if $add_mount {
+        mount { 'swap':
+          ensure  => present,
+          fstype  => swap,
+          device  => $swapfile,
+          dump    => 0,
+          pass    => 0,
+          require => Exec['Attach swap file'],
+        }
+      }
+    }
+  elsif $ensure == 'absent' {
+    exec { 'Detach swap file':
+      command => "/sbin/swapoff ${swapfile}",
+      onlyif  => "/sbin/swapon -s | grep ${swapfile}",
+    }
+    file { $swapfile:
+      ensure  => absent,
+      backup  => false,
+      require => Exec['Detach swap file'],
+    }
+    mount { 'swap':
+      ensure  => absent,
+      device  => $swapfile,
+      require => File[$swapfile],
+    }
+  }
 }
