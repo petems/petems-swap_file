@@ -10,8 +10,8 @@ describe 'swap_file class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfa
         EOS
 
         # Run it twice and test for idempotency
-        expect(apply_manifest(pp).exit_code).to_not eq(1)
-        expect(apply_manifest(pp).exit_code).to eq(0)
+        expect(apply_manifest(pp, :catch_failures => true).exit_code).to_not eq(1)
+        expect(apply_manifest(pp, :catch_failures => true).exit_code).to eq(0)
       end
       it 'should contain the default swapfile' do
         shell('/sbin/swapon -s | grep /mnt/swap.1', :acceptable_exit_codes => [0])
@@ -26,8 +26,8 @@ describe 'swap_file class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfa
         }
         EOS
 
-        expect(apply_manifest(pp).exit_code).to_not eq(1)
-        expect(apply_manifest(pp).exit_code).to eq(0)
+        expect(apply_manifest(pp, :catch_failures => true).exit_code).to_not eq(1)
+        expect(apply_manifest(pp, :catch_failures => true).exit_code).to eq(0)
       end
       it 'should contain the given swapfile' do
         shell('/sbin/swapon -s | grep /tmp/swapfile', :acceptable_exit_codes => [0])
