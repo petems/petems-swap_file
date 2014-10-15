@@ -33,6 +33,7 @@ class swap_file (
   $swapfile      = '/mnt/swap.1',
   $swapfilesize  = $::memorysize,
   $add_mount     = true
+  $options       = 'defaults',
 ) inherits swap_file::params {
 
   # Parameter validation
@@ -56,6 +57,7 @@ class swap_file (
           ensure  => present,
           fstype  => swap,
           device  => $swapfile,
+          options => $options,
           dump    => 0,
           pass    => 0,
           require => Exec['Attach swap file'],
