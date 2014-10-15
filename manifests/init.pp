@@ -32,8 +32,8 @@ class swap_file (
   $ensure        = 'present',
   $swapfile      = '/mnt/swap.1',
   $swapfilesize  = $::memorysize,
-  $add_mount     = true
-  $options       = 'defaults',
+  $add_mount     = true,
+  $options       = 'defaults'
 ) inherits swap_file::params {
 
   # Parameter validation
