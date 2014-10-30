@@ -15,7 +15,7 @@ class swap_file::params {
       fail('Swap files dont work on windows')
     }
     'FreeBSD': {
-      fail('FreeBSD is not yet supported')
+      fail('FreeBSD is not yet supported (See https://github.com/petems/puppet-swap_file/issues/9)')
     }
     default: {
       warning("${::operatingsystem} not officially supported, but should work")
