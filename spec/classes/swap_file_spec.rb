@@ -98,4 +98,15 @@ describe 'swap_file' do
       it { expect { should contain_class('swap_file') }.to raise_error(Puppet::Error, /Swap files dont work on windows/) }
     end
   end
+
+  context 'FreeBSD operating system' do
+    describe 'swap_file class without any parameters on FreeBSD' do
+      let(:facts) {{
+        :osfamily        => 'FreeBSD',
+        :operatingsystem => 'FreeBSD',
+      }}
+
+      it { expect { should contain_class('swap_file') }.to raise_error(Puppet::Error, /FreeBSD is not yet supported/) }
+    end
+  end
 end
