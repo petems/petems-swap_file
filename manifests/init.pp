@@ -47,6 +47,12 @@ class swap_file (
         command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
         creates => $swapfile,
       }
+      file { "${swapfile}":
+        owner => root,
+        group => root,
+        mode => 600,
+        require => Exec['Create swap file'],
+      }
       exec { 'Attach swap file':
         command => "/sbin/mkswap ${swapfile} && /sbin/swapon ${swapfile}",
         require => Exec['Create swap file'],
