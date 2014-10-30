@@ -40,7 +40,7 @@ describe 'swap_file' do
             }
         it { should contain_exec('Attach swap file') }
 
-        it { should contain_mount('swap').with_ensure('present') }
+        it { should contain_mount('swap').with_ensure('present').with_options('defaults') }
       end
        describe "can specify no mount for swapfile" do
         let(:params) {{ :add_mount => false, }}
