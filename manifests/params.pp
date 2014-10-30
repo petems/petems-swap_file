@@ -14,6 +14,9 @@ class swap_file::params {
     'windows': {
       fail('Swap files dont work on windows')
     }
+    'FreeBSD': {
+      fail('FreeBSD is not yet supported')
+    }
     default: {
       warning("${::operatingsystem} not officially supported, but should work")
     }
