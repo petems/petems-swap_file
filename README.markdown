@@ -36,7 +36,7 @@ For a custom setup, you can do something like this:
 ```puppet
 class { 'swap_file':
   swapfile     => '/swapfile/swap1',
-  swapfilesize => '1000000'
+  swapfilesize => '1 GB'
 }
 ```
 
@@ -52,6 +52,8 @@ class { 'swap_file':
 ##Limitations
 
 Primary support is for Debian and RedHat, but should work on all Linux flavours.
+
+Right now there is no BSD support, but I'm planning on adding it in the future.
 
 ##Development
 
