@@ -7,9 +7,9 @@ describe 'swap_file' do
   end
 
   context 'with defaults for all parameters' do
-    it { should compile.with_all_deps }
-    it { should contain_class('swap_file') }
-    it { should have_resource_count(0) }
+    it { is_expected.to compile.with_all_deps }
+    it { is_expected.to contain_class('swap_file') }
+    it { is_expected.to have_resource_count(0) }
   end
 
   context 'with files set to valid hash' do
@@ -26,19 +26,19 @@ describe 'swap_file' do
       }
     end
 
-    it { should compile.with_all_deps }
-    it { should contain_class('swap_file') }
+    it { is_expected.to compile.with_all_deps }
+    it { is_expected.to contain_class('swap_file') }
     # subclass swap_file::files adds 4 resources for each given file
-    it { should have_resource_count(10) }
+    it { is_expected.to have_resource_count(10) }
 
     it do
-      should contain_swap_file__files('swap').with({
+      is_expected.to contain_swap_file__files('swap').with({
         'ensure' => 'present',
       })
     end
 
     it do
-      should contain_swap_file__files('test').with({
+      is_expected.to contain_swap_file__files('test').with({
         'swapfile' => '/mnt/test',
       })
     end
@@ -55,12 +55,12 @@ describe 'swap_file' do
 
     context 'when files_hiera_merge is set to the default value <false>' do
       let(:params) { { :files_hiera_merge => false } }
-      it { should compile.with_all_deps }
-      it { should contain_class('swap_file') }
-      it { should have_resource_count(5) }
+      it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_class('swap_file') }
+      it { is_expected.to have_resource_count(5) }
 
       it do
-        should contain_swap_file__files('resource_name').with({
+        is_expected.to contain_swap_file__files('resource_name').with({
           'ensure'   => 'present',
           'swapfile' => '/mnt/swap',
         })
@@ -69,19 +69,19 @@ describe 'swap_file' do
 
     context 'when files_hiera_merge is set to valid value <true>' do
       let(:params) { { :files_hiera_merge => true } }
-      it { should compile.with_all_deps }
-      it { should contain_class('swap_file') }
-      it { should have_resource_count(15) }
+      it { is_expected.to compile.with_all_deps }
+      it { is_expected.to contain_class('swap_file') }
+      it { is_expected.to have_resource_count(15) }
 
       it do
-        should contain_swap_file__files('resource_name').with({
+        is_expected.to contain_swap_file__files('resource_name').with({
           'ensure'   => 'present',
           'swapfile' => '/mnt/swap',
         })
       end
 
       it do
-        should contain_swap_file__files('swap1').with({
+        is_expected.to contain_swap_file__files('swap1').with({
           'ensure'       => 'present',
           'swapfile'     => '/mnt/swap.1',
           'swapfilesize' => '1 GB',
@@ -89,7 +89,7 @@ describe 'swap_file' do
       end
 
       it do
-        should contain_swap_file__files('swap2').with({
+        is_expected.to contain_swap_file__files('swap2').with({
           'ensure'       => 'present',
           'swapfile'     => '/mnt/swap.2',
           'swapfilesize' => '2 GB',
@@ -133,7 +133,7 @@ describe 'swap_file' do
         var[:valid].each do |valid|
           context "with #{var_name} (#{type}) set to valid #{valid} (as #{valid.class})" do
             let(:params) { validation_params.merge({ :"#{var_name}" => valid, }) }
-            it { should compile }
+            it { is_expected.to compile }
           end
         end
 
@@ -142,7 +142,7 @@ describe 'swap_file' do
             let(:params) { validation_params.merge({ :"#{var_name}" => invalid, }) }
             it 'should fail' do
               expect do
-                should contain_class(subject)
+                is_expected.to contain_class(subject)
               end.to raise_error(Puppet::Error, /#{var[:message]}/)
             end
           end
