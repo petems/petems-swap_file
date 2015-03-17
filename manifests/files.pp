@@ -41,7 +41,7 @@ define swap_file::files (
   validate_bool($add_mount)
 
   if $ensure == 'present' {
-    exec { 'Create swap file':
+    exec { "Create swap file ${swapfile}":
       command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
       creates => $swapfile,
     }
@@ -49,11 +49,11 @@ define swap_file::files (
       owner   => root,
       group   => root,
       mode    => '0600',
-      require => Exec['Create swap file'],
+      require => Exec["Create swap file ${swapfile}"],
     }
-    exec { 'Attach swap file':
+    exec { "Attach swap file ${swapfile}":
       command => "/sbin/mkswap ${swapfile} && /sbin/swapon ${swapfile}",
-      require => Exec['Create swap file'],
+      require => File[$swapfile],
       unless  => "/sbin/swapon -s | grep ${swapfile}",
     }
     if $add_mount {
@@ -64,19 +64,19 @@ define swap_file::files (
         options => $options,
         dump    => 0,
         pass    => 0,
-        require => Swap_file[$swapfile],
+        require => Exec["Attach swap file ${swapfile}"],
       }
     }
   }
   elsif $ensure == 'absent' {
-    exec { 'Detach swap file':
+    exec { 'Detach swap file ${swapfile}':
       command => "/sbin/swapoff ${swapfile}",
       onlyif  => "/sbin/swapon -s | grep ${swapfile}",
     }
     file { $swapfile:
       ensure  => absent,
       backup  => false,
-      require => Swap_file[$swapfile],
+      require => Exec["Detach swap file ${swapfile}"],
     }
     mount { $swapfile:
       ensure => absent,

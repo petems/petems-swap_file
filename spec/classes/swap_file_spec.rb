@@ -14,12 +14,16 @@ describe 'swap_file' do
         it { should contain_class('Swap_file::Params') }
         it { should contain_class('Swap_file') }
 
+        it { should contain_file('/mnt/swap.1') }
+
+        it { should contain_swap_file__files('/mnt/swap.1') }
+
         it {
-            should contain_exec('Create swap file').
+            should contain_exec('Create swap file /mnt/swap.1').
               with_command('/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=1073')
             }
 
-        it { should contain_exec('Attach swap file') }
+        it { should contain_exec('Attach swap file /mnt/swap.1') }
 
         it { should contain_mount('/mnt/swap.1').with_ensure('present') }
       end
@@ -34,11 +38,15 @@ describe 'swap_file' do
         it { should contain_class('Swap_file::Params') }
         it { should contain_class('Swap_file') }
 
+        it { should contain_file('/foo/bar') }
+
+        it { should contain_swap_file__files('/foo/bar') }
+
         it {
-            should contain_exec('Create swap file').
+            should contain_exec('Create swap file /foo/bar').
               with_command('/bin/dd if=/dev/zero of=/foo/bar bs=1M count=1073')
             }
-        it { should contain_exec('Attach swap file') }
+        it { should contain_exec('Attach swap file /foo/bar') }
 
         it { should contain_mount('/foo/bar').with_ensure('present').with_options('defaults') }
       end
@@ -53,11 +61,15 @@ describe 'swap_file' do
         it { should contain_class('Swap_file::Params') }
         it { should contain_class('Swap_file') }
 
+        it { should contain_file('/mnt/swap.1') }
+
+        it { should contain_swap_file__files('/mnt/swap.1') }
+
         it {
-            should contain_exec('Create swap file').
+            should contain_exec('Create swap file /mnt/swap.1').
               with_command('/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=0')
             }
-        it { should contain_exec('Attach swap file') }
+        it { should contain_exec('Attach swap file /mnt/swap.1') }
 
         it { should_not contain_mount('/mnt/swap.1').with_ensure('present') }
       end
@@ -77,12 +89,16 @@ describe 'swap_file' do
       it { should contain_class('Swap_file::Params') }
       it { should contain_class('Swap_file') }
 
+      it { should contain_file('/mnt/swap.1') }
+
+      it { should contain_swap_file__files('/mnt/swap.1') }
+
       it {
-          should contain_exec('Create swap file').
+          should contain_exec('Create swap file /mnt/swap.1').
             with_command('/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=1073')
           }
 
-      it { should contain_exec('Attach swap file') }
+      it { should contain_exec('Attach swap file /mnt/swap.1') }
 
       it { should contain_mount('/mnt/swap.1').with_ensure('present') }
     end
