@@ -8,6 +8,7 @@ group :test do
   gem 'puppet-syntax'
   gem 'puppetlabs_spec_helper'
   gem 'simplecov'
+  gem 'metadata-json-lint'
 end
 
 group :development do
