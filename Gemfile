@@ -19,7 +19,7 @@ end
 
 group :system_tests do
   gem 'beaker',
-    :git => 'https://github.com/petems/beaker.git'
+    :git => 'https://github.com/petems/beaker.git',
     :ref => 'QENG-1663-add_freebsd_support'
   gem 'beaker-rspec'
 end
