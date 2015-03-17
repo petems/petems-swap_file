@@ -16,6 +16,7 @@ group :development do
   gem 'travis-lint'
   gem 'puppet-blacksmith'
   gem 'guard-rake'
+  gem 'puppet-module'
 end
 
 group :system_tests do
