@@ -6,16 +6,16 @@
 class swap_file::params {
   case $::osfamily {
     'Debian': {
-
+      $partition_group = 'root'
     }
     'RedHat': {
-
+      $partition_group = 'root'
     }
     'windows': {
       fail('Swap files dont work on windows')
     }
     'FreeBSD': {
-      fail('FreeBSD is not yet supported (See https://github.com/petems/puppet-swap_file/issues/9)')
+      $partition_group = 'wheel'
     }
     default: {
       warning("${::operatingsystem} not officially supported, but should work")

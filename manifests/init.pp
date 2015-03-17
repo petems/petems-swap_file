@@ -49,7 +49,7 @@ class swap_file (
       }
       file { $swapfile:
         owner   => root,
-        group   => root,
+        group   => $swap_file::params::partition_group,
         mode    => '0600',
         require => Exec['Create swap file'],
       }
