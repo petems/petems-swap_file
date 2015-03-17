@@ -1,5 +1,11 @@
 ## Change Log
 
+## 2015-03-17 - Release 1.1.1
+### Summary
+
+- Update README
+- Update to Beaker specs
+
 ## 2015-03-17 - Release 1.1.0
 ### Summary
 
