@@ -57,7 +57,7 @@ define swap_file::files (
       unless  => "/sbin/swapon -s | grep ${swapfile}",
     }
     if $add_mount {
-      mount { 'swap':
+      mount { $swapfile:
         ensure  => present,
         fstype  => swap,
         device  => $swapfile,
@@ -78,9 +78,9 @@ define swap_file::files (
       backup  => false,
       require => Swap_file[$swapfile],
     }
-    mount { 'swap':
-      ensure  => absent,
-      device  => $swapfile,
+    mount { $swapfile:
+      ensure => absent,
+      device => $swapfile,
     }
   }
 

@@ -21,7 +21,7 @@ describe 'swap_file' do
 
         it { should contain_exec('Attach swap file') }
 
-        it { should contain_mount('swap').with_ensure('present') }
+        it { should contain_mount('/mnt/swap.1').with_ensure('present') }
       end
       describe "swap_file class with parameters on #{osfamily}" do
         let(:params) {{ :swapfile => '/foo/bar', :swapfilesize => '1 GB' }}
@@ -40,7 +40,7 @@ describe 'swap_file' do
             }
         it { should contain_exec('Attach swap file') }
 
-        it { should contain_mount('swap').with_ensure('present').with_options('defaults') }
+        it { should contain_mount('/foo/bar').with_ensure('present').with_options('defaults') }
       end
        describe "can specify no mount for swapfile" do
         let(:params) {{ :add_mount => false, }}
@@ -59,7 +59,7 @@ describe 'swap_file' do
             }
         it { should contain_exec('Attach swap file') }
 
-        it { should_not contain_mount('swap').with_ensure('present') }
+        it { should_not contain_mount('/mnt/swap.1').with_ensure('present') }
       end
     end
   end
@@ -84,7 +84,7 @@ describe 'swap_file' do
 
       it { should contain_exec('Attach swap file') }
 
-      it { should contain_mount('swap').with_ensure('present') }
+      it { should contain_mount('/mnt/swap.1').with_ensure('present') }
     end
   end
 
