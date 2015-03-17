@@ -1,0 +1,10 @@
+HOSTS:
+  freebsd-10-x64:
+    roles:
+      - master
+    platform: freebsd-10-x64
+    box : freebsd-10-x64-vbox
+    box_url : https://vagrantcloud.com/chef/boxes/freebsd-10.0/versions/1.0.0/providers/virtualbox.box
+    hypervisor : vagrant
+CONFIG:
+  type: git
