@@ -4,9 +4,7 @@
 2. [Module Description ](#module-description)
 3. [Setup](#setup)
     * [What swap_file affects](#what-swap_file-affects)
-    * [Setup requirements](#setup-requirements)
 4. [Usage](#usage)
-5. [Reference](#reference)
 5. [Limitations](#limitations)
 6. [Development](#development)
 
@@ -18,6 +16,7 @@ Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environm
 
 ###What swap_file affects
 
+* Creating files from the path given using `/bin/dd`
 * Swapfiles on the system
 * Any mounts of swapfiles
 
@@ -26,34 +25,54 @@ Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environm
 The simplest use of the module is this:
 
 ```puppet
-include swap_file
+swap_file::files { 'default':
+  ensure   => present,
+}
 ```
 
-By default, the module it will create a swap file under `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes` fact divided by 1000000.
+By default, the module it will:
+
+* create a file using /bin/dd atr `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes`
+* A `mount` for the swapfile created
 
 For a custom setup, you can do something like this:
 
 ```puppet
-class { 'swap_file':
-  swapfile     => '/swapfile/swap1',
-  swapfilesize => '1 GB'
+swap_file::files { 'tmp file swap':
+  ensure   => present,
+  swapfile => '/tmp/swapfile',
+  mount    => false,
 }
 ```
 
 To remove a prexisting swap, you can use ensure absent:
 
 ```puppet
-class { 'swap_file':
-  ensure   => 'absent'
-  swapfile => '/swapfile/swap1',
+swap_file::files { 'tmp file swap':
+  ensure   => absent,
 }
 ```
+
+## Previous to 1.0.1 Release
+
+Previously you would create swapfiles with the `swap_file` class:
+
+```
+class { 'swap_file':
+   swapfile => '/mount/swapfile',
+   swapfilesize => '100 MB',
+}
+```
+
+However, this had many problems, such as not being able to declare more than one swap_file because of duplicate class errors.
+
+This is now deprecated and will give a warning. 
 
 ##Limitations
 
 Primary support is for Debian and RedHat, but should work on all Linux flavours.
 
-Right now there is no BSD support, but I'm planning on adding it in the future.
+Right now there is no BSD support, but I'm planning on adding it in the future
 
 ##Development
 
