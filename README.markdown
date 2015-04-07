@@ -41,7 +41,7 @@ For a custom setup, you can do something like this:
 swap_file::files { 'tmp file swap':
   ensure   => present,
   swapfile => '/tmp/swapfile',
-  mount    => false,
+  add_mount    => false,
 }
 ```
 
