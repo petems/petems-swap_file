@@ -53,6 +53,24 @@ swap_file::files { 'tmp file swap':
 }
 ```
 
+You can create several swap_file::files resources by passing them as a hash to
+the main class. In Hiera you would do this:
+
+```
+# Create two additional swapfiles using the $swapfiles parameter
+swap_file::swapfiles:
+  swap0:
+    ensure: 'present'
+    swapfile: '/swapfile.0'
+    swapfilesize: '1024MB'
+  swap1:
+    ensure: 'present'
+    swapfile: '/swapfile.1'
+```
+
+This same approach can be used in Foreman, which does not support creating
+defined resources directly.
+
 ## Previous to 1.0.1 Release
 
 Previously you would create swapfiles with the `swap_file` class:
