@@ -39,9 +39,9 @@ For a custom setup, you can do something like this:
 
 ```puppet
 swap_file::files { 'tmp file swap':
-  ensure   => present,
-  swapfile => '/tmp/swapfile',
-  add_mount    => false,
+  ensure    => present,
+  swapfile  => '/tmp/swapfile',
+  add_mount => false,
 }
 ```
 
@@ -59,7 +59,7 @@ Previously you would create swapfiles with the `swap_file` class:
 
 ```
 class { 'swap_file':
-   swapfile => '/mount/swapfile',
+   swapfile     => '/mount/swapfile',
    swapfilesize => '100 MB',
 }
 ```
