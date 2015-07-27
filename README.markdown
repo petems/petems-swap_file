@@ -66,7 +66,7 @@ class { 'swap_file':
 
 However, this had many problems, such as not being able to declare more than one swap_file because of duplicate class errors.
 
-This is now deprecated and will give a warning. 
+This is now removed from 2.x.x onwards.
 
 ##Limitations
 
