@@ -224,10 +224,10 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    puppet (3.4.3)
-      facter (~> 1.6)
+    puppet (3.8.1)
+      facter (> 1.6, < 3)
       hiera (~> 1.0)
-      rgen (~> 0.6.5)
+      json_pure
     puppet-blacksmith (3.2.0)
       puppet (>= 2.7.16)
       rest-client
@@ -256,7 +256,6 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     retriable (1.4.1)
-    rgen (0.6.6)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
@@ -332,7 +331,7 @@ DEPENDENCIES
   beaker-rspec
   guard-rake
   metadata-json-lint
-  puppet (~> 3.4.0)
+  puppet (~> 3.8.0)
   puppet-blacksmith
   puppet-lint
   puppet-module
@@ -343,3 +342,6 @@ DEPENDENCIES
   simplecov
   travis
   travis-lint
+
+BUNDLED WITH
+   1.10.5
