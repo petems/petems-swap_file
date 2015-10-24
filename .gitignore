@@ -5,3 +5,5 @@ spec/fixtures
 .vagrant/
 log/
 junit/
+.yar*
+doc/
