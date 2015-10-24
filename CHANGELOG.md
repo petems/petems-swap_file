@@ -1,27 +1,107 @@
-## Change Log
+# Change Log
 
-## 2015-03-17 - Release 1.1.1
-### Summary
+## [v2.0.0](https://github.com/petems/puppet-swap_file/tree/v2.0.0) (2015-07-27)
 
-- Update README
-- Update to Beaker specs
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v1.1.1...v2.0.0)
 
-## 2015-03-17 - Release 1.1.0
-### Summary
+**Closed issues:**
 
-- Adds swap_file::files defined type
-- Deprecate use of class to create swap files
+- swap\_file::files fails when you set the ensure attribute to absent [\#21](https://github.com/petems/puppet-swap_file/issues/21)
 
-## 2015-01-01 - Release 1.0.1
-### Summary
+**Merged pull requests:**
 
-- Minor fix to liscense rule (https://docs.puppetlabs.com/puppet/latest/reference/modules_publishing.html#fields-in-metadatajson)
+- Remove Class for Swap file [\#23](https://github.com/petems/puppet-swap_file/pull/23) ([petems](https://github.com/petems))
 
-## 2014-08-24 - Release 1.0.0
-### Summary
+- Fix: exec contains swapfile name when absent [\#22](https://github.com/petems/puppet-swap_file/pull/22) ([juame](https://github.com/juame))
 
-#### Features
-- No real functionality changes, just tweaks for approval release
+- Update README.markdown [\#18](https://github.com/petems/puppet-swap_file/pull/18) ([yalcinsurkultay](https://github.com/yalcinsurkultay))
 
-#### Bugfixes
-- n/a
+- Minor fixes and $swapfiles hash parameter [\#19](https://github.com/petems/puppet-swap_file/pull/19) ([mattock](https://github.com/mattock))
+
+- R [\#17](https://github.com/petems/puppet-swap_file/pull/17) ([petems](https://github.com/petems))
+
+## [v1.1.1](https://github.com/petems/puppet-swap_file/tree/v1.1.1) (2015-03-17)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v1.1.0...v1.1.1)
+
+**Closed issues:**
+
+- mount resource should be unique [\#14](https://github.com/petems/puppet-swap_file/issues/14)
+
+**Merged pull requests:**
+
+- Add defined type for swap and give unique names [\#16](https://github.com/petems/puppet-swap_file/pull/16) ([petems](https://github.com/petems))
+
+## [v1.1.0](https://github.com/petems/puppet-swap_file/tree/v1.1.0) (2015-03-17)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v1.0.1...v1.1.0)
+
+## [v1.0.1](https://github.com/petems/puppet-swap_file/tree/v1.0.1) (2015-01-17)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v1.0.0...v1.0.1)
+
+**Closed issues:**
+
+- Not issue, ask a question [\#11](https://github.com/petems/puppet-swap_file/issues/11)
+
+- missed "default" in fstab [\#5](https://github.com/petems/puppet-swap_file/issues/5)
+
+- Docker Beaker tests always fail [\#4](https://github.com/petems/puppet-swap_file/issues/4)
+
+**Merged pull requests:**
+
+- Fix License code [\#12](https://github.com/petems/puppet-swap_file/pull/12) ([petems](https://github.com/petems))
+
+- Add FreeBSD tests [\#10](https://github.com/petems/puppet-swap_file/pull/10) ([petems](https://github.com/petems))
+
+- Swap fstab settings [\#8](https://github.com/petems/puppet-swap_file/pull/8) ([petems](https://github.com/petems))
+
+- Fixes to swapfile permissions and to implied OS support [\#7](https://github.com/petems/puppet-swap_file/pull/7) ([mattock](https://github.com/mattock))
+
+- add options in swap fstab file [\#6](https://github.com/petems/puppet-swap_file/pull/6) ([SydOps](https://github.com/SydOps))
+
+## [v1.0.0](https://github.com/petems/puppet-swap_file/tree/v1.0.0) (2014-09-24)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.2.0...v1.0.0)
+
+**Merged pull requests:**
+
+- Make mount toggleable [\#3](https://github.com/petems/puppet-swap_file/pull/3) ([petems](https://github.com/petems))
+
+## [v0.2.0](https://github.com/petems/puppet-swap_file/tree/v0.2.0) (2014-09-01)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.3.0...v0.2.0)
+
+## [v0.3.0](https://github.com/petems/puppet-swap_file/tree/v0.3.0) (2014-09-01)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/0.3.0...v0.3.0)
+
+## [0.3.0](https://github.com/petems/puppet-swap_file/tree/0.3.0) (2014-09-01)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/0.2.0...0.3.0)
+
+## [0.2.0](https://github.com/petems/puppet-swap_file/tree/0.2.0) (2014-08-22)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.1.2...0.2.0)
+
+**Merged pull requests:**
+
+- Add mount resource type [\#2](https://github.com/petems/puppet-swap_file/pull/2) ([bodgit](https://github.com/bodgit))
+
+## [v0.1.2](https://github.com/petems/puppet-swap_file/tree/v0.1.2) (2014-05-29)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.1.1...v0.1.2)
+
+## [v0.1.1](https://github.com/petems/puppet-swap_file/tree/v0.1.1) (2014-05-29)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.1.0...v0.1.1)
+
+## [v0.1.0](https://github.com/petems/puppet-swap_file/tree/v0.1.0) (2014-02-27)
+
+**Merged pull requests:**
+
+- Removing custom fact for memory size in bytes [\#1](https://github.com/petems/puppet-swap_file/pull/1) ([petems](https://github.com/petems))
+
+
+
+\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
