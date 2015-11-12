@@ -65,4 +65,48 @@ describe 'swap_file::files' do
     end
   end
 
+  context 'custom swapfilesize parameter with timeout' do
+    let(:params) do
+      {
+        #:ensure => "present",
+        :swapfile => "/mnt/swap.2",
+        :swapfilesize => '4.1 GB',
+        #:add_mount => true,
+        #:options => "defaults",
+        :timeout => 900,
+      }
+    end
+    it do
+      is_expected.to compile.with_all_deps
+    end
+    it do
+      is_expected.to contain_exec('Create swap file /mnt/swap.2').
+      with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.2 bs=1M count=4402",
+       "timeout"=>900,"creates"=>"/mnt/swap.2"})
+    end
+  end
+
+  context 'custom swapfilesize parameter with fallocate' do
+    let(:params) do
+      {
+        #:ensure => "present",
+        :swapfile => "/mnt/swap.3",
+        :swapfilesize => '4.1 GB',
+        #:add_mount => true,
+        #:options => "defaults",
+        :cmd => 'fallocate',
+        :timeout => '900',
+      }
+    end
+    it do
+      is_expected.to compile.with_all_deps
+    end
+    it do
+      is_expected.to contain_exec('Create swap file /mnt/swap.3').
+      with({"command"=>"/usr/bin/fallocate -l 4402M /mnt/swap.3",
+       "timeout"=>900,"creates"=>"/mnt/swap.3"})
+    end
+  end
+
+
 end
