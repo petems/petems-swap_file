@@ -52,7 +52,7 @@ swap_file::files { 'tmp file swap':
   swapfile  => '/tmp/swapfile',
   cmd       => 'fallocate',
 }
-
+```
 
 To remove a prexisting swap, you can use ensure absent:
 
