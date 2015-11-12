@@ -14,6 +14,9 @@
 #   Add a mount to the swapfile so it persists on boot
 # [*options*]
 #   Mount options for the swapfile
+# [*timeout*]
+#   dd command exec timeout.
+#   Defaults to 300
 #
 # == Examples
 #
@@ -31,7 +34,8 @@ define swap_file::files (
   $swapfile      = '/mnt/swap.1',
   $swapfilesize  = $::memorysize,
   $add_mount     = true,
-  $options       = 'defaults'
+  $options       = 'defaults',
+  $timeout       = 300
 )
 {
   # Parameter validation
@@ -44,6 +48,7 @@ define swap_file::files (
     exec { "Create swap file ${swapfile}":
       command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
       creates => $swapfile,
+      timeout => $timeout,
     }
     file { $swapfile:
       owner   => root,
