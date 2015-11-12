@@ -50,17 +50,16 @@ define swap_file::files (
   validate_bool($add_mount)
 
   if $ensure == 'present' {
-    if $cmd == 'dd' {
-      exec { "Create swap file ${swapfile}":
-        command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
-        creates => $swapfile,
-        timeout => $timeout,
+    exec { "Create swap file ${swapfile}":
+      creates => $swapfile,
+      timeout => $timeout,
+    }
+    case $cmd {
+      'dd': {
+        Exec["Create swap file ${swapfile}"] { command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}" }
       }
-    } else {
-      exec { "Create swap file ${swapfile}":
-        command => "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}",
-        creates => $swapfile,
-        timeout => $timeout,
+      'fallocate': {
+        Exec["Create swap file ${swapfile}"] { command => "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}" }
       }
     }
     file { $swapfile:
