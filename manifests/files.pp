@@ -14,6 +14,12 @@
 #   Add a mount to the swapfile so it persists on boot
 # [*options*]
 #   Mount options for the swapfile
+# [*timeout*]
+#   dd command exec timeout.
+#   Defaults to 300
+# [*cmd*]
+#   What command is used to create the file, dd or fallocate. dd is better tested and safer but fallocate is significantly faster.
+#   Defaults to dd
 #
 # == Examples
 #
@@ -31,19 +37,32 @@ define swap_file::files (
   $swapfile      = '/mnt/swap.1',
   $swapfilesize  = $::memorysize,
   $add_mount     = true,
-  $options       = 'defaults'
+  $options       = 'defaults',
+  $timeout       = 300,
+  $cmd           = 'dd'
 )
 {
   # Parameter validation
   validate_re($ensure, ['^absent$', '^present$'], "Invalid ensure: ${ensure} - (Must be 'present' or 'absent')")
+  validate_re($cmd, ['^dd$', '^fallocate$'], "Invalid ensure: ${cmd} - (Must be 'dd' or 'fallocate')")
   validate_string($swapfile)
   $swapfilesize_mb = to_bytes($swapfilesize) / 1000000
   validate_bool($add_mount)
 
   if $ensure == 'present' {
-    exec { "Create swap file ${swapfile}":
-      command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
-      creates => $swapfile,
+
+    if $cmd == 'dd' {
+      exec { "Create swap file ${swapfile}":
+        command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
+        creates => $swapfile,
+        timeout => $timeout,
+      }
+    } else {
+      exec { "Create swap file ${swapfile}":
+        command => "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}",
+        creates => $swapfile,
+        timeout => $timeout,
+      }
     }
     file { $swapfile:
       owner   => root,
