@@ -82,7 +82,7 @@ describe 'swap_file::files' do
     it do
       is_expected.to contain_exec('Create swap file /mnt/swap.2').
       with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.2 bs=1M count=4402",
-       "creates"=>"/mnt/swap.2"})
+       "timeout"=>900,"creates"=>"/mnt/swap.2"})
     end
   end
 
