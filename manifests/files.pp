@@ -52,18 +52,26 @@ define swap_file::files (
   if $ensure == 'present' {
 
     if $cmd == 'dd' {
+
       exec { "Create swap file ${swapfile}":
         command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}",
         creates => $swapfile,
         timeout => $timeout,
       }
+
     } else {
+
+      $swapDir = dirname($swapfile)
+
       exec { "Create swap file ${swapfile}":
         command => "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}",
         creates => $swapfile,
         timeout => $timeout,
+        unless => "/bin/df -PT ${swapDir} | /bin/awk 'NR==2 {print \$2}' | /bin/grep xfs 2>/dev/null",    # fallocate does not work on XFS
       }
+
     }
+
     file { $swapfile:
       owner   => root,
       group   => root,
