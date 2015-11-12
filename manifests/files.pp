@@ -1,33 +1,30 @@
-# Define: swap_file::files
+# swap_file::files - Used for managing swapfiles and their mounts
 #
-# This is a defined type to create a swap_file
+# @author Peter Souter and petems-swap_file contributors. Based on the original work by Matt Dainty
 #
-# == Parameters
-# [*ensure*]
-#   Allows creation or removal of swapspace and the corresponding file.
-# [*swapfile*]
-#   Location of swapfile, defaults to /mnt
-# [*swapfilesize*]
-#   Size of the swapfile as a string (eg. 10 MB, 1.2 GB).
-#   Defaults to $::memorysize fact on the node
-# [*add_mount*]
-#   Add a mount to the swapfile so it persists on boot
-# [*options*]
-#   Mount options for the swapfile
-# [*timeout*]
-#   dd command exec timeout.
-#   Defaults to 300
+# @param ensure  [String] Allows creation or removal of swapspace and the corresponding file.
+# @param swapfile [String]   Location of swapfile, defaults to /mnt
+# @param swapfilesize [Integer]  Size of the swapfile as a string (eg. 10 MB, 1.2 GB). Defaults to $::memorysize fact on the node
+# @param add_mount [Boolean] Add a mount to the swapfile so it persists on boot
+# @param options [String] Mount options for the swapfile, defaults to 'defaults'
+# @param timeout [Integer] Timeout time for the dd command to create a file, defaults to 300 seconds
 #
-# == Examples
-#
+# @example Default - This will by create a swapfile with the default size of the $::memorysize fact
 #   swap_file::files { 'default':
 #     ensure   => present,
-#     swapfile => '/mnt/swap.55',
 #   }
 #
+# @example Change the swapfile location
+#   swap_file::files { 'tmp location':
+#     ensure   => present,
+#     swapfile => '/tmp/swap_file',
+#   }
 #
-# == Authors
-#    @petems - Peter Souter
+# @example Change the swapfile size
+#   swap_file::files { '512MB Swap':
+#     ensure       => present,
+#     swapfilesize => '512mb',
+#   }
 #
 define swap_file::files (
   $ensure        = 'present',
@@ -38,6 +35,7 @@ define swap_file::files (
   $timeout       = 300
 )
 {
+
   # Parameter validation
   validate_re($ensure, ['^absent$', '^present$'], "Invalid ensure: ${ensure} - (Must be 'present' or 'absent')")
   validate_string($swapfile)
