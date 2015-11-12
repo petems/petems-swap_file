@@ -16,7 +16,8 @@ Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environm
 
 ###What swap_file affects
 
-* Creating files from the path given using `/bin/dd` by default or `/usr/bin/fallocate` optionally for performance reasons. <aside class="notice"> WARNING: the fallocate option is known not to work on XFS partitions. The exec that creates the file with fallocate will check and verify the swap file destination is not an XFS partition automatically. </aside>
+* Creating files from the path given using `/bin/dd` by default or `/usr/bin/fallocate` optionally for performance reasons. 
+  * WARNING: the fallocate option is known not to work on XFS partitions. The `exec` that creates the file with `fallocate` will check and verify the swap file destination is not an XFS partition automatically.
 * Swapfiles on the system
 * Any mounts of swapfiles
 
@@ -44,7 +45,7 @@ swap_file::files { 'tmp file swap':
   add_mount => false,
 }
 ```
-To use fallocate for swap file creation instead of dd do this. <aside class="notice"> This will fail on XFS partitions. </aside>
+To use fallocate for swap file creation instead of dd do this. _This will fail on XFS partitions._
 
 ```puppet
 swap_file::files { 'tmp file swap':
