@@ -16,7 +16,7 @@ Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environm
 
 ###What swap_file affects
 
-* Creating files from the path given using `/bin/dd` by default or `/usr/bin/fallocate` optionally for performance reasons.
+* Creating a swap-file on disk. This uses `dd` by default, but can use `fallocate` optionally for performance reasons. **Note: Using fallocate to create a ZFS file system will fail: https://bugzilla.redhat.com/show_bug.cgi?id=1129205**
 * Swapfiles on the system
 * Any mounts of swapfiles
 
@@ -44,7 +44,8 @@ swap_file::files { 'tmp file swap':
   add_mount => false,
 }
 ```
-To use fallocate for swap file creation instead of dd do this:
+
+To use `fallocate` for swap file creation instead of `dd`:
 
 ```puppet
 swap_file::files { 'tmp file swap':
@@ -52,7 +53,7 @@ swap_file::files { 'tmp file swap':
   swapfile  => '/tmp/swapfile',
   cmd       => 'fallocate',
 }
-```
+
 
 To remove a prexisting swap, you can use ensure absent:
 
