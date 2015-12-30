@@ -1,5 +1,35 @@
 # Change Log
 
+## [v2.1.0](https://github.com/petems/puppet-swap_file/tree/v2.1.0) (2015-12-30)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v2.0.0...v2.1.0)
+
+**Closed issues:**
+
+- Missing 2.0.0 tag [\#24](https://github.com/petems/puppet-swap_file/issues/24)
+
+**Merged pull requests:**
+
+- Adds `cmd` parameter. [\#35](https://github.com/petems/puppet-swap_file/pull/35) ([petems](https://github.com/petems))
+
+- Updating Beaker acceptance machines [\#34](https://github.com/petems/puppet-swap_file/pull/34) ([petems](https://github.com/petems))
+
+- Enable travis docker [\#32](https://github.com/petems/puppet-swap_file/pull/32) ([petems](https://github.com/petems))
+
+- Adds spec.opts file [\#31](https://github.com/petems/puppet-swap_file/pull/31) ([petems](https://github.com/petems))
+
+- Add cmd param [\#29](https://github.com/petems/puppet-swap_file/pull/29) ([petems](https://github.com/petems))
+
+- Added timeout parameter for exec when using dd [\#27](https://github.com/petems/puppet-swap_file/pull/27) ([petems](https://github.com/petems))
+
+- fallocate checks against XFS [\#33](https://github.com/petems/puppet-swap_file/pull/33) ([BIAndrews](https://github.com/BIAndrews))
+
+- new feature - dd or fallocate option [\#30](https://github.com/petems/puppet-swap_file/pull/30) ([BIAndrews](https://github.com/BIAndrews))
+
+- new feature - dd or fallocate option [\#28](https://github.com/petems/puppet-swap_file/pull/28) ([BIAndrews](https://github.com/BIAndrews))
+
+- optional timeout parameter for the dd exec [\#25](https://github.com/petems/puppet-swap_file/pull/25) ([BIAndrews](https://github.com/BIAndrews))
+
 ## [v2.0.0](https://github.com/petems/puppet-swap_file/tree/v2.0.0) (2015-07-27)
 
 [Full Changelog](https://github.com/petems/puppet-swap_file/compare/v1.1.1...v2.0.0)
@@ -62,19 +92,19 @@
 
 ## [v1.0.0](https://github.com/petems/puppet-swap_file/tree/v1.0.0) (2014-09-24)
 
-[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.2.0...v1.0.0)
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.3.0...v1.0.0)
 
 **Merged pull requests:**
 
 - Make mount toggleable [\#3](https://github.com/petems/puppet-swap_file/pull/3) ([petems](https://github.com/petems))
 
-## [v0.2.0](https://github.com/petems/puppet-swap_file/tree/v0.2.0) (2014-09-01)
-
-[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.3.0...v0.2.0)
-
 ## [v0.3.0](https://github.com/petems/puppet-swap_file/tree/v0.3.0) (2014-09-01)
 
-[Full Changelog](https://github.com/petems/puppet-swap_file/compare/0.3.0...v0.3.0)
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v0.2.0...v0.3.0)
+
+## [v0.2.0](https://github.com/petems/puppet-swap_file/tree/v0.2.0) (2014-09-01)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/0.3.0...v0.2.0)
 
 ## [0.3.0](https://github.com/petems/puppet-swap_file/tree/0.3.0) (2014-09-01)
 
