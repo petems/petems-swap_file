@@ -8,3 +8,4 @@ junit/
 .yar*
 doc/
 coverage/
+Gemfile.lock
