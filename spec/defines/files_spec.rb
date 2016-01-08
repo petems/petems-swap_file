@@ -121,4 +121,15 @@ describe 'swap_file::files' do
         )
     end
   end
+
+  context 'with cmd set to invalid value' do
+    let(:params) do
+      {
+        :cmd => 'invalid',
+      }
+    end
+    it 'should fail' do
+      expect { should contain_class(subject) }.to raise_error(Puppet::Error, /Invalid cmd: invalid - \(Must be \'dd\' or \'fallocate\'\)/)
+    end
+  end
 end

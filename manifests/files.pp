@@ -44,7 +44,6 @@ define swap_file::files (
 {
   # Parameter validation
   validate_re($ensure, ['^absent$', '^present$'], "Invalid ensure: ${ensure} - (Must be 'present' or 'absent')")
-  validate_re($cmd, ['^dd$', '^fallocate$'], "Invalid cmd: ${cmd} - (Must be 'dd' or 'fallocate')")
   validate_string($swapfile)
   $swapfilesize_mb = to_bytes($swapfilesize) / 1000000
   validate_bool($add_mount)
@@ -60,6 +59,9 @@ define swap_file::files (
       }
       'fallocate': {
         Exec["Create swap file ${swapfile}"] { command => "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}" }
+      }
+      default: {
+        fail("Invalid cmd: ${cmd} - (Must be 'dd' or 'fallocate')")
       }
     }
     file { $swapfile:
