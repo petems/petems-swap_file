@@ -67,7 +67,7 @@ swap_file::files { 'tmp file swap':
 ### hiera
 You can also use hiera to call this module and set the configuration.
 
-The simplest use of the module is this:
+The simplest use of the module with hiera is this:
 
 ```yaml
 classes:
@@ -78,10 +78,9 @@ swap_file::files:
     ensure: 'present'
 ```
 
-The module will:
-* create a file using /bin/dd atr `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes` and creates a `mount` for it.
+This hiera setup will create a file using /bin/dd atr `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes` and add a  `mount` resource for it.
 
-You can use all customizations mentioned above like this:
+You can use all customizations mentioned above in hiera like this:
 
 ```yaml
 classes:
@@ -100,12 +99,12 @@ swap_file::files:
     swapfile: '/tmp/swapfile.old'
 ```
 
-The module will:
+This hiera config will respectively:
 * create a file `/tmp/swapfile.custom` using /bin/dd with the default size taken from the `$::memorysizeinbytes` without creating a `mount` for it.
 * create a file `/tmp/swapfile.fallocate` using /usr/bin/fallocate with the default size taken from the `$::memorysizeinbytes` and creating a `mount` for it.
 * deactivates the swapfile `/tmp/swapfile.old`, deletes it and removes the `mount`.
 
-Set files_hiera_merge to true to merge all found instances of swap_file::files in Hiera. This is usefull for specifying swap files at different levels of the hierachy and having them all includid in the catalog.
+Set `$files_hiera_merge` to `true` to merge all found instances of `swap_file::files` in Hiera. This is useful for specifying swap files at different levels of the hierachy and having them all included in the catalog.
 
 ##Upgrading from 1.0.1 Release
 
