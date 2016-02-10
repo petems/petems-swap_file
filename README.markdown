@@ -6,7 +6,8 @@
     * [What swap_file affects](#what-swap_file-affects)
 4. [Usage](#usage)
 5. [Limitations](#limitations)
-6. [Development](#development)
+6. [Upgrading from 1.0.1 Release](#upgrading-from-101-release)
+7. [Development](#development)
 
 ##Overview
 
@@ -53,7 +54,7 @@ swap_file::files { 'tmp file swap':
   swapfile  => '/tmp/swapfile',
   cmd       => 'fallocate',
 }
-
+```
 
 To remove a prexisting swap, you can use ensure absent:
 
@@ -63,20 +64,93 @@ swap_file::files { 'tmp file swap':
 }
 ```
 
-## Previous to 1.0.1 Release
+### hiera
+You can also use hiera to call this module and set the configuration.
+
+The simplest use of the module is this:
+
+```yaml
+classes:
+  - swap_file
+
+swap_file::files:
+  'default':
+    ensure: 'present'
+```
+
+The module will:
+* create a file using /bin/dd atr `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes` and creates a `mount` for it.
+
+You can use all customizations mentioned above like this:
+
+```yaml
+classes:
+  - swap_file
+
+swap_file::files:
+  'custom setup':
+    ensure: 'present'
+    swapfile: '/tmp/swapfile.custom'
+    add_mount: false
+  'use fallocate':
+    swapfile: '/tmp/swapfile.fallocate'
+    cmd: 'fallocate'
+  'remove swap file'
+    ensure: 'absent'
+    swapfile: '/tmp/swapfile.old'
+```
+
+The module will:
+* create a file `/tmp/swapfile.custom` using /bin/dd with the default size taken from the `$::memorysizeinbytes` without creating a `mount` for it.
+* create a file `/tmp/swapfile.fallocate` using /usr/bin/fallocate with the default size taken from the `$::memorysizeinbytes` and creating a `mount` for it.
+* deactivates the swapfile `/tmp/swapfile.old`, deletes it and removes the `mount`.
+
+Set files_hiera_merge to true to merge all found instances of swap_file::files in Hiera. This is usefull for specifying swap files at different levels of the hierachy and having them all includid in the catalog.
+
+##Upgrading from 1.0.1 Release
 
 Previously you would create swapfiles with the `swap_file` class:
 
-```
+```puppet
 class { 'swap_file':
-   swapfile     => '/mount/swapfile',
-   swapfilesize => '100 MB',
+  ensure => 'present',
 }
 ```
 
 However, this had many problems, such as not being able to declare more than one swap_file because of duplicate class errors.
+Since 2.x.x the swapfiles are created by a defined type instead. The `swap_file` class is now a wrapper and can handle multiple swap_files.
 
-This is now removed from 2.x.x onwards.
+You can now use:
+
+```puppet
+class { 'swap_file':
+  files => {
+    'freetext resource name' => {
+      ensure => 'present',
+    },
+  },
+}
+```
+
+You can also safely declare mutliple swap file definitions:
+
+```puppet
+class { 'swap_file':
+  files => {
+    'swapfile' => {
+      ensure => 'present',
+    },
+    'use fallocate' => {
+      swapfile => '/tmp/swapfile.fallocate',
+      cmd      => 'fallocate',
+    },
+    'remove swap file' => {
+      ensure   => 'absent',
+      swapfile => '/tmp/swapfile.old',
+    },
+  },
+}
+```
 
 ##Limitations
 
