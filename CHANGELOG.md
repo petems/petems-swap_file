@@ -1,5 +1,25 @@
 # Change Log
 
+## [v2.2.0](https://github.com/petems/puppet-swap_file/tree/v2.2.0) (2016-02-15)
+
+[Full Changelog](https://github.com/petems/puppet-swap_file/compare/v2.1.0...v2.2.0)
+
+**Closed issues:**
+
+- Module should be tested on multiple Ruby and Puppet versions [\#38](https://github.com/petems/puppet-swap_file/issues/38)
+
+- Release version 2.1.0 on Puppet Forge [\#36](https://github.com/petems/puppet-swap_file/issues/36)
+
+- dd vs fallocate  [\#26](https://github.com/petems/puppet-swap_file/issues/26)
+
+**Merged pull requests:**
+
+- Wrapper [\#40](https://github.com/petems/puppet-swap_file/pull/40) ([Phil-Friderici](https://github.com/Phil-Friderici))
+
+- Modernize Travis setup [\#39](https://github.com/petems/puppet-swap_file/pull/39) ([Phil-Friderici](https://github.com/Phil-Friderici))
+
+- Satisfy puppet-lint [\#37](https://github.com/petems/puppet-swap_file/pull/37) ([Phil-Friderici](https://github.com/Phil-Friderici))
+
 ## [v2.1.0](https://github.com/petems/puppet-swap_file/tree/v2.1.0) (2015-12-30)
 
 [Full Changelog](https://github.com/petems/puppet-swap_file/compare/v2.0.0...v2.1.0)
