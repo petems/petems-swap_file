@@ -1,3 +1,11 @@
+# swap_file
+
+[![Puppet
+Forge](http://img.shields.io/puppetforge/v/petems/swap_file.svg)](https://forge.puppetlabs.com/petems/swap_file) [![Build
+Status](https://secure.travis-ci.org/petems/petems-swap_file.png)](http://travis-ci.org/petems/petems-swap_file) [![Puppet Forge
+Downloads](http://img.shields.io/puppetforge/dt/petems/swap_file.svg)](https://forge.puppetlabs.com/petems/swap_file) [![Puppet Forge
+Endorsement](https://img.shields.io/puppetforge/e/petems/swap_file.svg)](https://forge.puppetlabs.com/petems/swap_file)
+
 ####Table of Contents
 
 1. [Overview](#overview)
