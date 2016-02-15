@@ -1,5 +1,11 @@
 require 'spec_helper'
 describe 'swap_file' do
+  let(:facts) do
+    {
+      :memorysize => '1.00 GB',
+    }
+  end
+
   context 'with defaults for all parameters' do
     it { should compile.with_all_deps }
     it { should contain_class('swap_file') }
@@ -43,6 +49,7 @@ describe 'swap_file' do
       {
         :fqdn              => 'files',
         :parameter_tests   => 'files_hiera_merge',
+        :memorysize        => '1.00 GB',
       }
     end
 
@@ -97,6 +104,7 @@ describe 'swap_file' do
     let(:facts) do
       {
         :osfamily => 'RedHat',
+        :memorysize => '1.00 GB',
       }
     end
     let(:validation_params) do
