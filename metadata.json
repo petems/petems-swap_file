@@ -1,12 +1,12 @@
 {
   "name": "petems-swap_file",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "author": "Peter Souter",
   "summary": "Create swap files for Linux systems with Puppet",
   "license": "Apache-2.0",
-  "source": "https://github.com/petems/puppet-swap_file",
-  "project_page": "https://github.com/petems/puppet-swap_file",
-  "issues_url": "https://github.com/petems/puppet-swap_file/issues",
+  "source": "https://github.com/petems/petems-swap_file",
+  "project_page": "https://github.com/petems/petems-swap_file",
+  "issues_url": "https://github.com/petems/petems-swap_file/issues",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
