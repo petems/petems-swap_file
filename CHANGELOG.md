@@ -1,6 +1,15 @@
 # Change Log
 
-## [v2.2.1](https://github.com/petems/petems-swap_file/tree/v2.2.1) (2016-02-15)
+## [Unreleased](https://github.com/petems/petems-swap_file/tree/HEAD)
+
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.2.1...HEAD)
+
+**Merged pull requests:**
+
+- Move to petems-swap\_file [\#42](https://github.com/petems/petems-swap_file/pull/42) ([petems](https://github.com/petems))
+- Make testing matrix a little simpler... [\#41](https://github.com/petems/petems-swap_file/pull/41) ([petems](https://github.com/petems))
+
+## [v2.2.1](https://github.com/petems/petems-swap_file/tree/v2.2.1) (2016-02-16)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.2.0...v2.2.1)
 
 ## [v2.2.0](https://github.com/petems/petems-swap_file/tree/v2.2.0) (2016-02-15)
