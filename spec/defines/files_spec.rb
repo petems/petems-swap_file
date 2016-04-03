@@ -23,7 +23,7 @@ describe 'swap_file::files' do
     end
     it do
       is_expected.to contain_exec('Create swap file /mnt/swap.1').
-               with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=1073",
+               with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=1024",
                      "creates"=>"/mnt/swap.1"})
     end
     it do
@@ -60,7 +60,7 @@ describe 'swap_file::files' do
     end
     it do
       is_expected.to contain_exec('Create swap file /mnt/swap.1').
-      with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=4402",
+      with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=4198",
        "creates"=>"/mnt/swap.1"})
     end
   end
@@ -81,7 +81,7 @@ describe 'swap_file::files' do
     end
     it do
       is_expected.to contain_exec('Create swap file /mnt/swap.2').
-      with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.2 bs=1M count=4402",
+      with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.2 bs=1M count=4198",
        "timeout"=>900,"creates"=>"/mnt/swap.2"})
     end
   end
@@ -99,7 +99,7 @@ describe 'swap_file::files' do
     end
     it do
       is_expected.to contain_exec('Create swap file /mnt/swap.2').
-      with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.2 bs=1M count=4402",
+      with({"command"=>"/bin/dd if=/dev/zero of=/mnt/swap.2 bs=1M count=4198",
        "timeout"=>900,"creates"=>"/mnt/swap.2"})
     end
   end
@@ -116,7 +116,7 @@ describe 'swap_file::files' do
       end
       is_expected.to contain_exec('Create swap file /mnt/swap.3').
         with(
-          {"command"=>"/usr/bin/fallocate -l 4402M /mnt/swap.3",
+          {"command"=>"/usr/bin/fallocate -l 4198M /mnt/swap.3",
             "creates"=>"/mnt/swap.3"}
         )
     end
