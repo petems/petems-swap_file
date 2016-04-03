@@ -45,7 +45,7 @@ define swap_file::files (
   # Parameter validation
   validate_re($ensure, ['^absent$', '^present$'], "Invalid ensure: ${ensure} - (Must be 'present' or 'absent')")
   validate_string($swapfile)
-  $swapfilesize_mb = to_bytes($swapfilesize) / 1000000
+  $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
   validate_bool($add_mount)
 
   if $ensure == 'present' {
