@@ -25,7 +25,7 @@ RSpec.configure do |c|
     # Install module and dependencies
     puppet_module_install(:source => proj_root, :module_name => 'swap_file')
     hosts.each do |host|
-      shell('puppet module install puppetlabs-stdlib --version 3.2.0', { :acceptable_exit_codes => [0,1] })
+      shell('puppet module install puppetlabs-stdlib --version 4.2.0', { :acceptable_exit_codes => [0,1] })
     end
   end
 end
