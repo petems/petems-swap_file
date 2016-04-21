@@ -40,6 +40,9 @@ define swap_file::files (
   $options       = 'defaults',
   $timeout       = 300,
   $cmd           = 'dd',
+  $resize_existing = false,
+  $resize_margin   = '50MB',
+  $resize_verbose  = false,
 )
 {
   # Parameter validation
@@ -49,6 +52,27 @@ define swap_file::files (
   validate_bool($add_mount)
 
   if $ensure == 'present' {
+
+    if ($resize_existing and $::swapfile_sizes) {
+
+      if (is_hash($::swapfile_sizes)) {
+
+        if (has_key($::swapfile_sizes,$swapfile)) {
+          ::swap_file::resize { $swapfile:
+            swapfile_path          => $swapfile,
+            margin                 => $resize_margin,
+            expected_swapfile_size => $swapfilesize,
+            actual_swapfile_size   => $::swapfile_sizes[$swapfile],
+            verbose                => $resize_verbose,
+            before                 => Exec["Create swap file ${swapfile}"],
+          }
+        }
+
+      } else {
+        fail('$resize_existing was set to true and stringify_facts was not false. This currently does not work, but will in the future. See https://github.com/petems/petems-swap_file/issues/57')
+      }
+    }
+
     exec { "Create swap file ${swapfile}":
       creates => $swapfile,
       timeout => $timeout,
