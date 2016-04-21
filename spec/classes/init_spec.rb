@@ -2,7 +2,8 @@ require 'spec_helper'
 describe 'swap_file' do
   let(:facts) do
     {
-      :memorysize => '1.00 GB',
+      :memorysize     => '1.00 GB',
+      :swap_file_size => '2.00 GB',
     }
   end
 
@@ -28,8 +29,8 @@ describe 'swap_file' do
 
     it { should compile.with_all_deps }
     it { should contain_class('swap_file') }
-    # subclass swap_file::files adds 4 resources for each given file
-    it { should have_resource_count(10) }
+    # subclass swap_file::files adds 11 resources for each given file
+    it { should have_resource_count(17) }
 
     it do
       should contain_swap_file__files('swap').with({
@@ -50,6 +51,7 @@ describe 'swap_file' do
         :fqdn              => 'files',
         :parameter_tests   => 'files_hiera_merge',
         :memorysize        => '1.00 GB',
+        :swap_file_size    => '2.00 GB',
       }
     end
 
@@ -57,7 +59,7 @@ describe 'swap_file' do
       let(:params) { { :files_hiera_merge => false } }
       it { should compile.with_all_deps }
       it { should contain_class('swap_file') }
-      it { should have_resource_count(5) }
+      it { should have_resource_count(9) }
 
       it do
         should contain_swap_file__files('resource_name').with({
@@ -71,7 +73,7 @@ describe 'swap_file' do
       let(:params) { { :files_hiera_merge => true } }
       it { should compile.with_all_deps }
       it { should contain_class('swap_file') }
-      it { should have_resource_count(15) }
+      it { should have_resource_count(25) }
 
       it do
         should contain_swap_file__files('resource_name').with({
@@ -103,8 +105,9 @@ describe 'swap_file' do
     # set needed custom facts and variables
     let(:facts) do
       {
-        :osfamily => 'RedHat',
-        :memorysize => '1.00 GB',
+        :osfamily       => 'RedHat',
+        :memorysize     => '1.00 GB',
+        :swap_file_size => '2.00 GB',
       }
     end
     let(:validation_params) do

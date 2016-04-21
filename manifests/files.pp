@@ -49,9 +49,11 @@ define swap_file::files (
   validate_bool($add_mount)
 
   if $ensure == 'present' {
-    exec { "Create swap file ${swapfile}":
-      creates => $swapfile,
-      timeout => $timeout,
+    unless defined(Exec["Create swap file ${swapfile}"]) {
+      exec { "Create swap file ${swapfile}":
+        creates => $swapfile,
+        timeout => $timeout,
+      }
     }
     case $cmd {
       'dd': {
@@ -62,6 +64,42 @@ define swap_file::files (
       }
       default: {
         fail("Invalid cmd: ${cmd} - (Must be 'dd' or 'fallocate')")
+      }
+    }
+    # Check if swapfile needs resize
+    unless $::swap_file_size == 0 {
+      if $::swap_file_size != $swapfilesize {
+        # Only attempt resize if swapfile is unused
+        if $::swapfree == $::swapsize {
+          unless defined(Notify['Swap is unused, continuing to resize swapfile']) {
+            notify {'Swap is unused, continuing to resize swapfile':
+              before  => Exec["Detach swap file ${swapfile} for resize"],
+            }
+          }
+          exec { "Detach swap file ${swapfile} for resize":
+            command => "/sbin/swapoff ${swapfile}",
+            onlyif  => "/sbin/swapon -s | grep ${swapfile}",
+          }
+          exec { "Purge ${swapfile} for resize":
+            command => "/bin/rm -f ${swapfile}",
+            onlyif  => "/bin/test -f ${swapfile}",
+            require => Exec["Detach swap file ${swapfile} for resize"],
+            before  => Exec["Create swap file ${swapfile}"],
+          }
+          notify {"${swapfile} will now be created with new size: ${swapfilesize_mb}":
+            require => Exec["Purge ${swapfile} for resize"],
+            before  => Exec["Create swap file ${swapfile}"],
+          }
+          unless defined(Exec["Create swap file ${swapfile}"]) {
+            exec { "Create swap file ${swapfile}":
+              creates => $swapfile,
+              timeout => $timeout,
+              require => Exec["Purge ${swapfile} for resize"],
+            }
+          }
+        } else {
+          notify {"${swapfile} is currently in use and cannot be resized!": }
+        }
       }
     }
     file { $swapfile:
