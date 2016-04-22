@@ -20,7 +20,7 @@ if File.exists?('/proc/swaps')
 
     end
 
-    Facter.add('swap_file_sizes') do
+    Facter.add('swapfile_sizes') do
       confine :kernel => 'Linux'
       setcode do
         swap_file_hash

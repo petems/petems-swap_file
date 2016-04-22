@@ -5,8 +5,8 @@ describe Facter::Util::Fact do
     Facter.clear
   }
 
-  describe 'swap_files' do
-    context 'returns swap_files when present' do
+  describe 'swapfile_sizes' do
+    context 'returns swapfile_sizes when present' do
       before do
         Facter.fact(:kernel).stubs(:value).returns("Linux")
         File.stubs(:exists?)
@@ -20,7 +20,7 @@ Filename        Type    Size  Used  Priority
 /tmp/swapfile.fallocate                 file    1019900 0 -2
         EOS
         Facter::Util::Resolution.expects(:exec).with('cat /proc/swaps').returns(proc_swap_output)
-        expect(Facter.value(:swap_file_sizes)).to eq(
+        expect(Facter.value(:swapfile_sizes)).to eq(
           {
             "/mnt/swap.1"=>"1019900",
             "/tmp/swapfile.fallocate"=>"1019900"
