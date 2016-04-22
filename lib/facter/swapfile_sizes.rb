@@ -5,8 +5,9 @@ if File.exists?('/proc/swaps')
 
     # Sample Output
     # Filename                                Type    Size  Used  Priority
-    # /mnt/swap.1                             file    1019900 0 -1
-    # /tmp/swapfile.fallocate                 file    1019900 0 -2
+    # /dev/dm-1                               partition 524284  0 -1
+    # /mnt/swap.1                             file    204796  0 -2
+    # /tmp/swapfile.fallocate                 file    204796  0 -3
     swap_file_output_array = swap_file_output.split("\n")
 
     # Remove the header line
@@ -16,7 +17,10 @@ if File.exists?('/proc/swaps')
 
       swap_file_line_array = line.gsub(/\s+/m, ' ').strip.split(" ")
 
-      swap_file_hash[swap_file_line_array[0]] = swap_file_line_array[2]
+      # We only want swap-file information, not paritions
+      if swap_file_line_array[1] == 'file'
+        swap_file_hash[swap_file_line_array[0]] = swap_file_line_array[2]
+      end
 
     end
 
