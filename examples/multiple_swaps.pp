@@ -1,15 +1,15 @@
 node default {
-  class { 'swap_file':
+  class { '::swap_file':
     files => {
-      'swapfile' => {
-        ensure => 'present',
+      'swapfile'         => {
+        ensure => 'present', # lint:ignore:ensure_first_param
       },
-      'use fallocate' => {
+      'use fallocate'    => {
         swapfile => '/tmp/swapfile.fallocate',
         cmd      => 'fallocate',
       },
       'remove swap file' => {
-        ensure   => 'absent',
+        ensure   => 'absent', # lint:ignore:ensure_first_param
         swapfile => '/tmp/swapfile.old',
       },
     },
