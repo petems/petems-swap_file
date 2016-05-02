@@ -1,17 +1,7 @@
-# == Class: swap_file
+# Main class to allow passing required swapfiles as hashes
 #
-# == Parameters
-# [*files*]
-#   Hash of swap files to ensure with swap_file::files
-# [*files_hiera_merge*]
-#   Boolean to merge all found instances of swap_file::files in Hiera.
-#   This can be used to specify swap files at different levels an have
-#   them all included in the catalog.
-#   Defaults to false
-#
-# == Examples
-#
-#   class { 'swap_file':
+# @example Will create one swapfile in /mnt/swap using the defaults.
+#   class { '::swap_file':
 #     'files' => {
 #       'resource_name' => {
 #         ensure   => present,
@@ -19,8 +9,8 @@
 #       },
 #     },
 #   }
-#   Will create one swapfile in /mnt/swap using the defaults.
 #
+# @example Will create two swapfile with the given parameters
 #   class { 'swap_file':
 #     'files' => {
 #       'swap1' => {
@@ -36,15 +26,19 @@
 #       },
 #     },
 #   }
-#   Will create two swapfile with the given parameters
 #
-#   class { 'swap_file':
+# @example Will merge all found instances of swap_file::files found in hiera and create resources for these.
+#   class { '::swap_file':
 #     files_hiera_merge: true,
 #   }
-#   Will merge all found instances of swap_file::files found in hiera and
-#   create resources for these.
 #
-
+# @param [Hash] files Hash of swap files to ensure with swap_file::files
+# @param [Boolean] files_hiera_merge Boolean to merge all found instances of swap_file::files in Hiera.
+#   This can be used to specify swap files at different levels an have
+#   them all included in the catalog.
+#
+# @author - Peter Souter
+#
 class swap_file (
   $files             = {},
   $files_hiera_merge = false,
