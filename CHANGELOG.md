@@ -1,5 +1,37 @@
 # Change Log
 
+## [v2.3.0](https://github.com/petems/petems-swap_file/tree/v2.3.0) (2016-05-04)
+
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.2.2...v2.3.0)
+
+**Closed issues:**
+
+- Update CHANGELOG with 2.2.2 changes [\#45](https://github.com/petems/petems-swap_file/issues/45)
+
+**Merged pull requests:**
+
+- Move coverage shim to spec\_helper [\#59](https://github.com/petems/petems-swap_file/pull/59) ([petems](https://github.com/petems))
+
+- Update main class documentation [\#58](https://github.com/petems/petems-swap_file/pull/58) ([petems](https://github.com/petems))
+
+- Add older listen gem for older Ruby versions [\#56](https://github.com/petems/petems-swap_file/pull/56) ([petems](https://github.com/petems))
+
+- New feature: resizing existing swapfiles [\#55](https://github.com/petems/petems-swap_file/pull/55) ([petems](https://github.com/petems))
+
+- Linting fixes in examples [\#54](https://github.com/petems/petems-swap_file/pull/54) ([petems](https://github.com/petems))
+
+- Updates swap file fact to only show swap files [\#53](https://github.com/petems/petems-swap_file/pull/53) ([petems](https://github.com/petems))
+
+- Make things a little less strict [\#52](https://github.com/petems/petems-swap_file/pull/52) ([petems](https://github.com/petems))
+
+- Renaming sizes fact [\#51](https://github.com/petems/petems-swap_file/pull/51) ([petems](https://github.com/petems))
+
+- Add contributing.json \(GitMagic\) [\#49](https://github.com/petems/petems-swap_file/pull/49) ([gitmagic-bot](https://github.com/gitmagic-bot))
+
+- Update stdlib versions [\#48](https://github.com/petems/petems-swap_file/pull/48) ([petems](https://github.com/petems))
+
+- Adding a fact to show you swap file sizes [\#47](https://github.com/petems/petems-swap_file/pull/47) ([petems](https://github.com/petems))
+
 ## [v2.2.2](https://github.com/petems/petems-swap_file/tree/v2.2.2) (2016-04-03)
 
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.2.1...v2.2.2)
