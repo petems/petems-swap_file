@@ -69,7 +69,17 @@ define swap_file::files (
         }
 
       } else {
-        fail('$resize_existing was set to true and stringify_facts was not false. This currently does not work, but will in the future. See https://github.com/petems/petems-swap_file/issues/57')
+        $existing_swapfile_size = swap_file_size_from_csv($swapfile,$::swapfile_sizes_csv)
+        if ($existing_swapfile_size) {
+          ::swap_file::resize { $swapfile:
+            swapfile_path          => $swapfile,
+            margin                 => $resize_margin,
+            expected_swapfile_size => $swapfilesize,
+            actual_swapfile_size   => $existing_swapfile_size,
+            verbose                => $resize_verbose,
+            before                 => Exec["Create swap file ${swapfile}"],
+          }
+        }
       }
     }
 

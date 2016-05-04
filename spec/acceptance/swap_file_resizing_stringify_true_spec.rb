@@ -32,15 +32,18 @@ describe 'swap_file class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfa
         pp = <<-EOS
         swap_file::files { 'default':
           ensure       => present,
-          swapfilesize => '100MB',
+          swapfilesize => '200MB',
           resize_existing => true,
         }
         EOS
 
         # Run it twice and test for idempotency
-        apply_manifest(pp, :expect_failures => true) do |r|
-          expect(r.stderr).to match(/stringify_facts was true/)
-        end
+        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
+      end
+      it 'should contain the given swapfile with the resized size (204796kb/200MB)' do
+        shell('/sbin/swapon -s | grep /mnt/swap.1', :acceptable_exit_codes => [0])
+        shell('/bin/cat /proc/swaps | grep 204796', :acceptable_exit_codes => [0])
       end
     end
   end

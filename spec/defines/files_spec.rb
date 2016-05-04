@@ -127,6 +127,9 @@ describe 'swap_file::files' do
   end
 
   context 'resize_existing => true' do
+
+    let(:existing_swap_kb) { '204796' } # 200MB
+
     context 'when swapfile_sizes fact exists and matches path' do
       let(:params) do
         {
@@ -134,8 +137,6 @@ describe 'swap_file::files' do
           resize_existing: true
         }
       end
-
-      let(:existing_swap_kb) { '204796' } # 200MB
 
       let(:facts) do
         {
@@ -146,7 +147,8 @@ describe 'swap_file::files' do
           memorysize: '1.00 GB',
           swapfile_sizes: {
             '/mnt/swap.resizeme' => existing_swap_kb,
-          }
+          },
+          swapfile_sizes_csv: "/mnt/swap.resizeme||#{existing_swap_kb}",
         }
       end
 
@@ -223,7 +225,120 @@ describe 'swap_file::files' do
           memorysize: '1.00 GB',
           swapfile_sizes: {
             '/mnt/swap.differentname' => '204796', # 200MB
-          }
+          },
+          swapfile_sizes_csv: "/mnt/swap.differentname||#{existing_swap_kb}",
+        }
+      end
+      it do
+        is_expected.to compile.with_all_deps
+      end
+      it do
+        is_expected.to contain_exec('Create swap file /mnt/swap.factbutnomatch')
+          .with(
+            'command' => '/bin/dd if=/dev/zero of=/mnt/swap.factbutnomatch bs=1M count=1024',
+            'creates' => '/mnt/swap.factbutnomatch'
+          )
+      end
+      it do
+        should_not contain_swap_file__resize('/mnt/swap.factbutnomatch')
+      end
+    end
+    context 'when swapfile_sizes fact exists and matches path, but not hash' do
+      let(:params) do
+        {
+          swapfile: '/mnt/swap.resizeme',
+          resize_existing: true
+        }
+      end
+
+      let(:existing_swap_kb) { '204796' } # 200MB
+
+      let(:facts) do
+        {
+          operatingsystem: 'RedHat',
+          osfamily: 'RedHat',
+          operatingsystemrelease: '7',
+          concat_basedir: '/tmp',
+          memorysize: '1.00 GB',
+          swapfile_sizes: "/mnt/swap.resizeme#{existing_swap_kb}",
+          swapfile_sizes_csv: "/mnt/swap.resizeme||#{existing_swap_kb}",
+        }
+      end
+
+      it do
+        is_expected.to compile.with_all_deps
+      end
+      it do
+        should contain_swap_file__resize('/mnt/swap.resizeme').with('swapfile_path' => '/mnt/swap.resizeme',
+                                                                    'margin'                 => '50MB',
+                                                                    'expected_swapfile_size' => '1.00 GB',
+                                                                    'actual_swapfile_size'   => existing_swap_kb,
+                                                                    'before'                 => 'Exec[Create swap file /mnt/swap.resizeme]')
+      end
+      it do
+        is_expected.to contain_exec('Create swap file /mnt/swap.resizeme')
+          .with('command' => '/bin/dd if=/dev/zero of=/mnt/swap.resizeme bs=1M count=1024',
+                'creates' => '/mnt/swap.resizeme')
+      end
+      it do
+        is_expected.to contain_file('/mnt/swap.resizeme')
+          .with('owner' => 'root',
+                'group' => 'root',
+                'mode' => '0600',
+                'require' => 'Exec[Create swap file /mnt/swap.resizeme]')
+      end
+      it do
+        is_expected.to contain_exec('Attach swap file /mnt/swap.resizeme')
+          .with('command' => '/sbin/mkswap /mnt/swap.resizeme && /sbin/swapon /mnt/swap.resizeme',
+                'require' => 'File[/mnt/swap.resizeme]',
+                'unless' => '/sbin/swapon -s | grep /mnt/swap.resizeme')
+      end
+      it do
+        is_expected.to contain_mount('/mnt/swap.resizeme')
+          .with('require' => 'Exec[Attach swap file /mnt/swap.resizeme]')
+      end
+    end
+    context 'when swapfile_sizes fact does not exist' do
+      let(:params) do
+        {
+          swapfile: '/mnt/swap.nofact',
+          resize_existing: true
+        }
+      end
+      let(:facts) do
+        {
+          operatingsystem: 'RedHat',
+          osfamily: 'RedHat',
+          operatingsystemrelease: '7',
+          concat_basedir: '/tmp',
+          memorysize: '1.00 GB',
+          swapfile_sizes: nil,
+          swapfile_sizes_csv: nil,
+        }
+      end
+      it do
+        is_expected.to compile.with_all_deps
+      end
+      it do
+        should_not contain_swap_file__resize('/mnt/swap.nofact')
+      end
+    end
+    context 'when swapfile_sizes fact exits but file does not match' do
+      let(:params) do
+        {
+          swapfile: '/mnt/swap.factbutnomatch',
+          resize_existing: true
+        }
+      end
+      let(:facts) do
+        {
+          operatingsystem: 'RedHat',
+          osfamily: 'RedHat',
+          operatingsystemrelease: '7',
+          concat_basedir: '/tmp',
+          memorysize: '1.00 GB',
+          swapfile_sizes: "/mnt/swap.differentname#{existing_swap_kb}",
+          swapfile_sizes_csv: "/mnt/swap.differentname||#{existing_swap_kb}",
         }
       end
       it do
@@ -241,4 +356,5 @@ describe 'swap_file::files' do
       end
     end
   end
+
 end
