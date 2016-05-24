@@ -1,6 +1,6 @@
 {
   "name": "petems-swap_file",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "author": "Peter Souter",
   "summary": "Create swap files for Linux systems with Puppet",
   "license": "Apache-2.0",
