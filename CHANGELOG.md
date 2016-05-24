@@ -1,5 +1,17 @@
 # Change Log
 
+## [v2.5.0](https://github.com/petems/petems-swap_file/tree/v2.5.0) (2016-05-24)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.4.1...v2.5.0)
+
+**Merged pull requests:**
+
+- Adds ability set swappiness with the module [\#62](https://github.com/petems/petems-swap_file/pull/62) ([petems](https://github.com/petems))
+
+## [v2.4.1](https://github.com/petems/petems-swap_file/tree/v2.4.1) (2016-05-11)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.4.0...v2.4.1)
+
+- See v2.4.0, accidental yanked last release
+
 ## [v2.4.0](https://github.com/petems/petems-swap_file/tree/v2.4.0) (2016-05-11)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.3.0...v2.4.0)
 
