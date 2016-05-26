@@ -1,5 +1,16 @@
 # Change Log
 
+## [v3.0.0](https://github.com/petems/petems-swap_file/tree/v3.0.0) (2016-05-26)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.5.0...v3.0.0)
+
+**Fixed bugs:**
+
+- Updating the module to latest version will create additional fstab entries for the same swapfile [\#20](https://github.com/petems/petems-swap_file/issues/20)
+
+**Merged pull requests:**
+
+- Type and provider refactor [\#15](https://github.com/petems/petems-swap_file/pull/15) ([petems](https://github.com/petems))
+
 ## [v2.5.0](https://github.com/petems/petems-swap_file/tree/v2.5.0) (2016-05-24)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.4.1...v2.5.0)
 
@@ -9,8 +20,6 @@
 
 ## [v2.4.1](https://github.com/petems/petems-swap_file/tree/v2.4.1) (2016-05-11)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.4.0...v2.4.1)
-
-- See v2.4.0, accidental yanked last release
 
 ## [v2.4.0](https://github.com/petems/petems-swap_file/tree/v2.4.0) (2016-05-11)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.3.0...v2.4.0)
@@ -143,13 +152,13 @@
 - Fixes to swapfile permissions and to implied OS support [\#7](https://github.com/petems/petems-swap_file/pull/7) ([mattock](https://github.com/mattock))
 
 ## [v1.0.0](https://github.com/petems/petems-swap_file/tree/v1.0.0) (2014-09-24)
-[Full Changelog](https://github.com/petems/petems-swap_file/compare/v0.3.0...v1.0.0)
-
-## [v0.3.0](https://github.com/petems/petems-swap_file/tree/v0.3.0) (2014-09-01)
-[Full Changelog](https://github.com/petems/petems-swap_file/compare/v0.2.0...v0.3.0)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v0.2.0...v1.0.0)
 
 ## [v0.2.0](https://github.com/petems/petems-swap_file/tree/v0.2.0) (2014-09-01)
-[Full Changelog](https://github.com/petems/petems-swap_file/compare/0.3.0...v0.2.0)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v0.3.0...v0.2.0)
+
+## [v0.3.0](https://github.com/petems/petems-swap_file/tree/v0.3.0) (2014-09-01)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/0.3.0...v0.3.0)
 
 ## [0.3.0](https://github.com/petems/petems-swap_file/tree/0.3.0) (2014-09-01)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/0.2.0...0.3.0)
