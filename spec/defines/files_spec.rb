@@ -34,14 +34,11 @@ describe 'swap_file::files' do
               'require' => 'Exec[Create swap file /mnt/swap.1]')
     end
     it do
-      is_expected.to contain_exec('Attach swap file /mnt/swap.1')
-        .with('command' => '/sbin/mkswap /mnt/swap.1 && /sbin/swapon /mnt/swap.1',
-              'require' => 'File[/mnt/swap.1]',
-              'unless' => '/sbin/swapon -s | grep /mnt/swap.1')
+      is_expected.to contain_swap_file('/mnt/swap.1')
     end
     it do
       is_expected.to contain_mount('/mnt/swap.1')
-        .with('require' => 'Exec[Attach swap file /mnt/swap.1]')
+        .with('require' => 'Swap_file[/mnt/swap.1]')
     end
   end
 
@@ -175,14 +172,12 @@ describe 'swap_file::files' do
                 'require' => 'Exec[Create swap file /mnt/swap.resizeme]')
       end
       it do
-        is_expected.to contain_exec('Attach swap file /mnt/swap.resizeme')
-          .with('command' => '/sbin/mkswap /mnt/swap.resizeme && /sbin/swapon /mnt/swap.resizeme',
-                'require' => 'File[/mnt/swap.resizeme]',
-                'unless' => '/sbin/swapon -s | grep /mnt/swap.resizeme')
+        is_expected.to contain_swap_file('/mnt/swap.resizeme')
+          .with('ensure' => 'present')
       end
       it do
         is_expected.to contain_mount('/mnt/swap.resizeme')
-          .with('require' => 'Exec[Attach swap file /mnt/swap.resizeme]')
+          .with('require' => 'Swap_file[/mnt/swap.resizeme]')
       end
     end
     context 'when swapfile_sizes fact does not exist' do
@@ -288,14 +283,12 @@ describe 'swap_file::files' do
                 'require' => 'Exec[Create swap file /mnt/swap.resizeme]')
       end
       it do
-        is_expected.to contain_exec('Attach swap file /mnt/swap.resizeme')
-          .with('command' => '/sbin/mkswap /mnt/swap.resizeme && /sbin/swapon /mnt/swap.resizeme',
-                'require' => 'File[/mnt/swap.resizeme]',
-                'unless' => '/sbin/swapon -s | grep /mnt/swap.resizeme')
+        is_expected.to contain_swap_file('/mnt/swap.resizeme')
+          .with('ensure' => 'present')
       end
       it do
         is_expected.to contain_mount('/mnt/swap.resizeme')
-          .with('require' => 'Exec[Attach swap file /mnt/swap.resizeme]')
+          .with('require' => 'Swap_file[/mnt/swap.resizeme]')
       end
     end
     context 'when swapfile_sizes fact does not exist' do
