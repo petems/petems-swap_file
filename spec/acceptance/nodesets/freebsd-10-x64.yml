@@ -1,0 +1,11 @@
+HOSTS:
+  freebsd-10-x64:
+    roles:
+      - master
+    platform: freebsd-10-x64
+    box : petems/freebsd-101-w_rsync
+    box_url : https://atlas.hashicorp.com/petems/boxes/freebsd-101-w_rsync
+    hypervisor : vagrant
+CONFIG:
+  log_level: verbose
+  type: foss

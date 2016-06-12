@@ -5,13 +5,20 @@ unless ENV['RS_PROVISION'] == 'no'
     if host.is_pe?
       install_pe
     else
-      install_puppet
+      if host['platform'] =~ /freebsd/
+        # Beaker tries to install sysutils/puppet
+        # It's now been renamed to sysutils/puppet38
+        host.install_package('sysutils/puppet38')
+      else
+        install_puppet
+      end
       on host, "mkdir -p #{host['distmoduledir']}"
     end
   end
 end
 
-UNSUPPORTED_PLATFORMS = ['windows']
+# Most tests wont work on FreeBSD, make 1 specific FreeBSD spec
+UNSUPPORTED_PLATFORMS = ['windows','freebsd']
 
 RSpec.configure do |c|
   # Project root
