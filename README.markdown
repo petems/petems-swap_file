@@ -41,7 +41,7 @@ swap_file::files { 'default':
 
 By default, the module it will:
 
-* create a file using /bin/dd atr `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes`
+* create a file using /bin/dd at `/mnt/swap.1` with the default size taken from the `$::memorysize` fact in megabytes (eg. 8GB RAM will create an 8GB swap file)
 * A `mount` for the swapfile created
 
 For a custom setup, you can do something like this:
@@ -86,7 +86,7 @@ swap_file::files:
     ensure: 'present'
 ```
 
-This hiera setup will create a file using /bin/dd atr `/mnt/swap.1` with the default size taken from the `$::memorysizeinbytes` and add a  `mount` resource for it.
+This hiera setup will create a file using /bin/dd atr `/mnt/swap.1` with the default size taken from the `$::memorysize` fact and add a  `mount` resource for it.
 
 You can use all customizations mentioned above in hiera like this:
 
@@ -108,8 +108,8 @@ swap_file::files:
 ```
 
 This hiera config will respectively:
-* create a file `/tmp/swapfile.custom` using /bin/dd with the default size taken from the `$::memorysizeinbytes` without creating a `mount` for it.
-* create a file `/tmp/swapfile.fallocate` using /usr/bin/fallocate with the default size taken from the `$::memorysizeinbytes` and creating a `mount` for it.
+* create a file `/tmp/swapfile.custom` using /bin/dd with the default size taken from the `$::memorysize` fact without creating a `mount` for it.
+* create a file `/tmp/swapfile.fallocate` using /usr/bin/fallocate with the default size taken from the `$::memorysize` fact and creating a `mount` for it.
 * deactivates the swapfile `/tmp/swapfile.old`, deletes it and removes the `mount`.
 
 Set `$files_hiera_merge` to `true` to merge all found instances of `swap_file::files` in Hiera. This is useful for specifying swap files at different levels of the hierachy and having them all included in the catalog.
