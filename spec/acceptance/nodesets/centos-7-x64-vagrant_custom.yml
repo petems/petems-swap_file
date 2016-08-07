@@ -1,0 +1,11 @@
+HOSTS:
+  centos-7-x64:
+    roles:
+      - default
+    platform: el-7-x86_64
+    box : centos/7
+    hypervisor : vagrantcustom
+CONFIG:
+  type: foss
+  log_level: verbose
+  vagrantfile: /var/lib/jenkins/vagrantfiles/Vagrantfile-vagrant_custom
