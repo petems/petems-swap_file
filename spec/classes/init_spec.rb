@@ -3,6 +3,7 @@ describe 'swap_file' do
   let(:facts) do
     {
       :memorysize => '1.00 GB',
+      selinux: true,
     }
   end
 
@@ -50,6 +51,7 @@ describe 'swap_file' do
         :fqdn              => 'files',
         :parameter_tests   => 'files_hiera_merge',
         :memorysize        => '1.00 GB',
+        :selinux           => true,
       }
     end
 
@@ -105,6 +107,7 @@ describe 'swap_file' do
       {
         :osfamily => 'RedHat',
         :memorysize => '1.00 GB',
+        :selinux    => true,
       }
     end
     let(:validation_params) do
