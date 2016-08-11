@@ -103,6 +103,13 @@ define swap_file::files (
       mode    => '0600',
       require => Exec["Create swap file ${swapfile}"],
     }
+
+    if $::selinux {
+      File[$swapfile] {
+        seltype => 'swapfile_t',
+      }
+    }
+
     swap_file { $swapfile:
       ensure  => 'present',
       require => File[$swapfile]
