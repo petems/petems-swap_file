@@ -39,7 +39,10 @@ group :system_tests do
     :git => 'https://github.com/puppetlabs/beaker-rspec.git',
     :ref => 'a617f7bbc3e6ebb6ce49df32749d4ce93cef737d',
     :require => false
-  gem 'signet', git: "https://github.com/google/signet.git"
+  gem 'beaker-vagrantcustom',
+    :git => 'https://github.com/petems/beaker-vagrantcustom',
+    :ref => 'be6a7ec7286833b49ed36753a5700c93343a40d5',
+    :require => false
   gem 'serverspec'
   gem 'specinfra'
 end
