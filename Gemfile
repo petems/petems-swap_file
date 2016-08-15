@@ -33,15 +33,11 @@ end
 group :system_tests do
   gem "beaker",
     :git => 'https://github.com/puppetlabs/beaker',
-    :ref => '0a7b948aeef8a422e7a86f34012f00166f1dda81',
+    :ref => '3d21e843434a2e65152bd352c653511ddea0ce71',
     :require => false
   gem "beaker-rspec",
     :git => 'https://github.com/puppetlabs/beaker-rspec.git',
     :ref => 'a617f7bbc3e6ebb6ce49df32749d4ce93cef737d',
-    :require => false
-  gem 'beaker-vagrantcustom',
-    :git => 'https://github.com/petems/beaker-vagrantcustom',
-    :ref => 'be6a7ec7286833b49ed36753a5700c93343a40d5',
     :require => false
   gem 'serverspec'
   gem 'specinfra'

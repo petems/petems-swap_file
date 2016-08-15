@@ -4,8 +4,8 @@ HOSTS:
       - default
     platform: el-7-x86_64
     box : centos/7
-    hypervisor : vagrantcustom
+    hypervisor : vagrant_libvirt
 CONFIG:
   type: foss
   log_level: verbose
-  vagrantfile: /var/lib/jenkins/vagrantfiles/Vagrantfile-vagrant_custom
+  network_mac: '5a:65:a9:97:e4:e4'
