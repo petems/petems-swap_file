@@ -13,7 +13,7 @@ node { // The "node" directive tells Jenkins to run commands on the same slave.
 
     env.PUPPET_INSTALL_TYPE = "agent"
 
-    env.BEAKER_set = "centos-7-x64-vagrant_custom"
+    env.BEAKER_set = "centos-7-x64-vagrant_libvirt"
 
     print "Beaker Settings will be: ${env.PUPPET_INSTALL_VERSION} ${env.PUPPET_INSTALL_TYPE} ${env.BEAKER_set}"
 
