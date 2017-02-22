@@ -1,5 +1,31 @@
 # Change Log
 
+## [v3.1.3](https://github.com/petems/petems-swap_file/tree/v3.1.3) (2017-02-22)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v3.0.2...v3.1.3)
+
+**Merged pull requests:**
+
+- Fixes Travis [\#71](https://github.com/petems/petems-swap_file/pull/71) ([petems](https://github.com/petems))
+- Make json file RFC 4627 valid [\#70](https://github.com/petems/petems-swap_file/pull/70) ([greglint](https://github.com/greglint))
+- Change to use vagrant-libvirt over custom [\#69](https://github.com/petems/petems-swap_file/pull/69) ([petems](https://github.com/petems))
+- Add testing for custom Vagrantfile [\#68](https://github.com/petems/petems-swap_file/pull/68) ([petems](https://github.com/petems))
+- Add basic Jenkinsfile [\#67](https://github.com/petems/petems-swap_file/pull/67) ([petems](https://github.com/petems))
+- Set seltype for swapfile [\#66](https://github.com/petems/petems-swap_file/pull/66) ([petems](https://github.com/petems))
+
+## [v3.0.2](https://github.com/petems/petems-swap_file/tree/v3.0.2) (2016-08-07)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v3.0.1...v3.0.2)
+
+**Closed issues:**
+
+- Directory not empty @ dir\_s\_rmdir [\#63](https://github.com/petems/petems-swap_file/issues/63)
+
+**Merged pull requests:**
+
+- Fix error in documentation [\#64](https://github.com/petems/petems-swap_file/pull/64) ([petems](https://github.com/petems))
+
+## [v3.0.1](https://github.com/petems/petems-swap_file/tree/v3.0.1) (2016-05-26)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v3.0.0...v3.0.1)
+
 ## [v3.0.0](https://github.com/petems/petems-swap_file/tree/v3.0.0) (2016-05-26)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/v2.5.0...v3.0.0)
 
