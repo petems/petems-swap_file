@@ -9,7 +9,6 @@ describe 'swap_file::swappiness' do
   it do
     is_expected.to contain_sysctl('vm.swappiness').
              with({"ensure"=>"present",
-                   "permanent"=>"true",
                    "value"=>"65"})
   end
 end
