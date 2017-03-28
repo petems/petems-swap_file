@@ -25,7 +25,7 @@ if File.exists?('/proc/swaps')
 
     end
 
-    swapfile_csv = swap_file_array.join(',')
+    swapfile_csv = swap_file_array.join(',') unless swap_file_array.empty?
 
     Facter.add('swapfile_sizes_csv') do
       confine :kernel => 'Linux'
