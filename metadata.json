@@ -53,11 +53,11 @@
     },
     {
       "name": "herculesteam/augeasproviders_sysctl",
-      "version_requirement": ">=2.1.0"
+      "version_requirement": ">=2.1.0 < 3.0.0"
     },
     {
       "name": "herculesteam/augeasproviders_core",
-      "version_requirement": ">=2.1.0"
+      "version_requirement": ">=2.1.0 < 3.0.0"
     }
   ]
 }

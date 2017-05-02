@@ -38,9 +38,7 @@ define swap_file::resize (
       exec { "Detach swap file ${swapfile_path} for resize":
         command => "/sbin/swapoff ${swapfile_path}",
         onlyif  => "/sbin/swapon -s | grep ${swapfile_path}",
-      }
-      ->
-      exec { "Purge ${swapfile_path} for resize":
+      } -> exec { "Purge ${swapfile_path} for resize":
         command => "/bin/rm -f ${swapfile_path}",
         onlyif  => "test -f ${swapfile_path}",
         path    => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
