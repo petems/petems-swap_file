@@ -112,7 +112,7 @@ define swap_file::files (
 
     swap_file { $swapfile:
       ensure  => 'present',
-      require => File[$swapfile]
+      require => File[$swapfile],
     }
     if $add_mount {
       mount { $swapfile:
