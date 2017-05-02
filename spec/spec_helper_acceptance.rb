@@ -26,7 +26,8 @@ RSpec.configure do |c|
     puppet_module_install(:source => proj_root, :module_name => 'swap_file')
     hosts.each do |host|
       shell('puppet module install puppetlabs-stdlib --version 4.7.0', { :acceptable_exit_codes => [0] })
-      shell('puppet module install fiddyspence-sysctl --version 1.1.0', { :acceptable_exit_codes => [0] })
+      shell('puppet module install herculesteam/augeasproviders_core --version 2.1.0', { :acceptable_exit_codes => [0] })
+      shell('puppet module install herculesteam/augeasproviders_sysctl --version 2.1.0', { :acceptable_exit_codes => [0] })
     end
   end
 end
