@@ -25,5 +25,22 @@ Filename        Type    Size  Used  Priority
       end
     end
 
+    context 'returns nil when no swapfiles' do
+      before do
+        Facter.fact(:kernel).stubs(:value).returns("Linux")
+        File.stubs(:exists?)
+        File.expects(:exists?).with('/proc/swaps').returns(true)
+        Facter::Util::Resolution.stubs(:exec)
+      end
+      it do
+        proc_swap_output = <<-EOS
+Filename        Type    Size  Used  Priority
+/dev/dm-2                               partition 16612860  0 -1
+        EOS
+        Facter::Util::Resolution.expects(:exec).with('cat /proc/swaps').returns(proc_swap_output)
+        expect(Facter.value(:swapfile_sizes_csv)).to eq(nil)
+      end
+    end
+
   end
 end
