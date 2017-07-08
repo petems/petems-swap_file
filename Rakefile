@@ -43,7 +43,7 @@ begin
   GitHubChangelogGenerator::RakeTask.new :changelog do |config|
     version = (Blacksmith::Modulefile.new).version
     config.future_release = "v#{version}"
-    config.header = "# Change log\n\nAll notable changes to this project will be documented in this file."
+    config.header = "# Change Log\n\nAll notable changes to this project will be documented in this file."
     config.exclude_labels = %w{duplicate question invalid wontfix modulesync}
   end
 rescue LoadError

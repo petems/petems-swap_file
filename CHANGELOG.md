@@ -1,5 +1,24 @@
 # Change Log
 
+All notable changes to this project will be documented in this file.
+
+## [v4.0.0](https://github.com/petems/petems-swap_file/tree/v4.0.0) (2017-07-09)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v3.1.4...v4.0.0)
+
+**Closed issues:**
+
+- Push v3.1.3 to Forge [\#72](https://github.com/petems/petems-swap_file/issues/72)
+
+**Merged pull requests:**
+
+- Linting fixes [\#76](https://github.com/petems/petems-swap_file/pull/76) ([petems](https://github.com/petems))
+- Update metadata.json [\#75](https://github.com/petems/petems-swap_file/pull/75) ([petems](https://github.com/petems))
+- Fixes issue with empty fact [\#74](https://github.com/petems/petems-swap_file/pull/74) ([petems](https://github.com/petems))
+- Update to Augeas systcl module [\#73](https://github.com/petems/petems-swap_file/pull/73) ([antyale](https://github.com/antyale))
+
+## [v3.1.4](https://github.com/petems/petems-swap_file/tree/v3.1.4) (2017-02-22)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v3.1.3...v3.1.4)
+
 ## [v3.1.3](https://github.com/petems/petems-swap_file/tree/v3.1.3) (2017-02-22)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/v3.0.2...v3.1.3)
 
@@ -178,13 +197,13 @@
 - Fixes to swapfile permissions and to implied OS support [\#7](https://github.com/petems/petems-swap_file/pull/7) ([mattock](https://github.com/mattock))
 
 ## [v1.0.0](https://github.com/petems/petems-swap_file/tree/v1.0.0) (2014-09-24)
-[Full Changelog](https://github.com/petems/petems-swap_file/compare/v0.2.0...v1.0.0)
-
-## [v0.2.0](https://github.com/petems/petems-swap_file/tree/v0.2.0) (2014-09-01)
-[Full Changelog](https://github.com/petems/petems-swap_file/compare/v0.3.0...v0.2.0)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v0.3.0...v1.0.0)
 
 ## [v0.3.0](https://github.com/petems/petems-swap_file/tree/v0.3.0) (2014-09-01)
-[Full Changelog](https://github.com/petems/petems-swap_file/compare/0.3.0...v0.3.0)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/v0.2.0...v0.3.0)
+
+## [v0.2.0](https://github.com/petems/petems-swap_file/tree/v0.2.0) (2014-09-01)
+[Full Changelog](https://github.com/petems/petems-swap_file/compare/0.3.0...v0.2.0)
 
 ## [0.3.0](https://github.com/petems/petems-swap_file/tree/0.3.0) (2014-09-01)
 [Full Changelog](https://github.com/petems/petems-swap_file/compare/0.2.0...0.3.0)
