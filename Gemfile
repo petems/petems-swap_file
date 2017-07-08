@@ -35,6 +35,7 @@ group :development do
   gem 'rubocop' if RUBY_VERSION >= '2.0.0'
   gem 'rubocop-rspec', '~> 1.6' if RUBY_VERSION >= '2.3.0'
   gem 'json_pure', '<= 2.0.1' if RUBY_VERSION < '2.0.0'
+  gem 'github_changelog_generator'
 end
 
 group :system_tests do
