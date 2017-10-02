@@ -50,7 +50,7 @@ class swap_file (
   } else {
     $files_hiera_merge_bool = str2bool($files_hiera_merge)
   }
-  validate_bool($files_hiera_merge_bool)
+  validate_legacy('Optional[Bool]', 'validate_bool', $files_hiera_merge_bool)
 
   # functionality
   if $files_hiera_merge_bool == true {
@@ -59,7 +59,7 @@ class swap_file (
     $files_real = $files
   }
   if $files_real != undef {
-    validate_hash($files_real)
+    validate_legacy('Optional[Hash]', 'validate_hash', $files_real)
     create_resources('swap_file::files', $files_real)
   }
 }
