@@ -26,16 +26,11 @@ group :test do
 end
 
 group :development do
-  gem 'travis'
-  gem 'travis-lint'
   gem 'puppet-blacksmith'
-  gem 'guard-rake'
-  gem 'listen', '<= 3.0.6', :require => false
-  gem 'rubocop', '0.41.2' if RUBY_VERSION < '2.0.0'
   gem 'rubocop' if RUBY_VERSION >= '2.0.0'
   gem 'rubocop-rspec', '~> 1.6' if RUBY_VERSION >= '2.3.0'
-  gem 'json_pure', '<= 2.0.1' if RUBY_VERSION < '2.0.0'
   gem 'github_changelog_generator'
+  gem 'activesupport', '< 5'
 end
 
 group :system_tests do
