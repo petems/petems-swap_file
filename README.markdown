@@ -20,9 +20,9 @@ Endorsement](https://img.shields.io/puppetforge/e/petems/swap_file.svg)](https:/
 
 Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environments. This is based on the gist by @Yggdrasil, with a few changes and added specs.
 
-##Setup
+## Setup
 
-###What swap_file affects
+### What swap_file affects
 
 * Creating a swap-file on disk. This uses `dd` by default, but can use `fallocate` optionally for performance reasons. **Note: Using fallocate to create a ZFS file system will fail: https://bugzilla.redhat.com/show_bug.cgi?id=1129205**
 * Swapfiles on the system
