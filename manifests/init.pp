@@ -50,7 +50,7 @@ class swap_file (
   } else {
     $files_hiera_merge_bool = str2bool($files_hiera_merge)
   }
-  validate_legacy('Optional[Bool]', 'validate_bool', $files_hiera_merge_bool)
+  validate_legacy('Optional[Boolean]', 'validate_bool', $files_hiera_merge_bool)
 
   # functionality
   if $files_hiera_merge_bool == true {
