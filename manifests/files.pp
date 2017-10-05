@@ -48,7 +48,7 @@ define swap_file::files (
   validate_legacy('Optional[String]', 'validate_re', $ensure, ['^absent$', '^present$'], "Invalid ensure: ${ensure} - (Must be 'present' or 'absent')")
   validate_legacy('Optional[String]', 'validate_string', $swapfile)
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
-  validate_legacy('Optional[Bool]', 'validate_bool', $add_mount)
+  validate_legacy('Optional[Boolean]', 'validate_bool', $add_mount)
 
   if $ensure == 'present' {
 
