@@ -1,15 +1,14 @@
 # swap_file
 
 [![Puppet
-Forge](http://img.shields.io/puppetforge/v/petems/swap_file.svg)](https://forge.puppetlabs.com/petems/swap_file) [![Build
-Status](https://secure.travis-ci.org/petems/petems-swap_file.png)](http://travis-ci.org/petems/petems-swap_file) [![Puppet Forge
+Forge](http://img.shields.io/puppetforge/v/petems/swap_file.svg)](https://forge.puppetlabs.com/petems/swap_file) [![Build Status](https://travis-ci.org/petems/petems-swap_file.svg?branch=master)](https://travis-ci.org/petems/petems-swap_file) [![Puppet Forge
 Downloads](http://img.shields.io/puppetforge/dt/petems/swap_file.svg)](https://forge.puppetlabs.com/petems/swap_file) [![Puppet Forge
 Endorsement](https://img.shields.io/puppetforge/e/petems/swap_file.svg)](https://forge.puppetlabs.com/petems/swap_file)
 
-####Table of Contents
+#### Table of Contents
 
 1. [Overview](#overview)
-2. [Module Description ](#module-description)
+2. [Module Description](#module-description)
 3. [Setup](#setup)
     * [What swap_file affects](#what-swap_file-affects)
 4. [Usage](#usage)
@@ -17,7 +16,7 @@ Endorsement](https://img.shields.io/puppetforge/e/petems/swap_file.svg)](https:/
 6. [Upgrading from 1.0.1 Release](#upgrading-from-101-release)
 7. [Development](#development)
 
-##Overview
+## Overview
 
 Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environments. This is based on the gist by @Yggdrasil, with a few changes and added specs.
 
@@ -29,7 +28,7 @@ Manage [swap files](http://en.wikipedia.org/wiki/Paging) for your Linux environm
 * Swapfiles on the system
 * Any mounts of swapfiles
 
-##Usage
+## Usage
 
 The simplest use of the module is this:
 
@@ -159,12 +158,12 @@ class { 'swap_file':
 }
 ```
 
-##Limitations
+## Limitations
 
 Primary support is for Debian and RedHat, but should work on all Linux flavours.
 
 Right now there is no BSD support, but I'm planning on adding it in the future
 
-##Development
+## Development
 
 Follow the CONTRIBUTING guidelines! :)
