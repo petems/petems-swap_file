@@ -19,3 +19,5 @@ RSpec.configure do |config|
 end
 
 at_exit { RSpec::Puppet::Coverage.report! }
+
+RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = 9999
