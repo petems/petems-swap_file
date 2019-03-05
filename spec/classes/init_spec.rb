@@ -121,7 +121,7 @@ describe 'swap_file' do
         :name    => %w(files_hiera_merge),
         :valid   => [true, false, 'true', 'false'],
         :invalid => ['invalid', %w(array), { 'ha' => 'sh' }, 3, 2.42, nil],
-        :message => '(Unknown type of boolean|str2bool\(\): Requires either string to work with)',
+        :message => '(Unknown type of boolean|str2bool\(\): (Requires either string to work with|Requires string to work with))',
       },
       'hash' => {
         :name    => %w(files),
