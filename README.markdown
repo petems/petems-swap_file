@@ -71,6 +71,16 @@ swap_file::files { 'tmp file swap':
 }
 ```
 
+To choose the size of the swap file instead of defaulting to memory size:
+
+```
+swap_file::files { '5GB Swap':
+  ensure       => present,
+  swapfile     => '/mnt/swap.5gb',
+  swapfilesize => '5GB',
+}
+```
+
 ### hiera
 You can also use hiera to call this module and set the configuration.
 
