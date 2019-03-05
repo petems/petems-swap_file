@@ -127,7 +127,7 @@ describe 'swap_file' do
         :name    => %w(files),
         :valid   => [{ 'swap' => { 'ensure' => 'present' } }],
         :invalid => ['invalid', %w(array), 3, 2.42, true, false, nil],
-        :message => 'is not a Hash',
+        :message => '(is not a Hash|expects a Hash value, got)',
       },
     }
 
