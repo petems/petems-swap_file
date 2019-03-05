@@ -16,6 +16,9 @@ end
 
 RSpec.configure do |config|
   config.hiera_config = 'spec/fixtures/hiera/hiera.yaml'
+  config.expect_with :rspec do |c|
+    c.max_formatted_output_length = 999
+  end
 end
 
 at_exit { RSpec::Puppet::Coverage.report! }
