@@ -5,12 +5,12 @@ describe 'swap_file::files' do
 
   let(:facts) do
     {
-      operatingsystem: 'RedHat',
-      osfamily: 'RedHat',
-      operatingsystemrelease: '7',
-      concat_basedir: '/tmp',
-      memorysize: '1.00 GB',
-      selinux: true,
+      memory: { 'system' => {'total' => '1.00 GB'}},
+      os: {
+        'selinux' => { 'enabled' => 'true' },
+        'family' => 'RedHat',
+        'release' => { 'major' => '7'},
+      },
     }
   end
 
@@ -138,16 +138,16 @@ describe 'swap_file::files' do
 
       let(:facts) do
         {
-          operatingsystem: 'RedHat',
-          osfamily: 'RedHat',
-          operatingsystemrelease: '7',
-          concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
           swapfile_sizes: {
             '/mnt/swap.resizeme' => existing_swap_kb,
           },
           swapfile_sizes_csv: "/mnt/swap.resizeme||#{existing_swap_kb}",
-          selinux: true,
+          memory: { 'system' => {'total' => '1.00 GB'}},
+          os: {
+          'selinux' => { 'enabled' => 'true' },
+          'family' => 'RedHat',
+          'release' => { 'major' => '7'},
+          },
         }
       end
 
@@ -191,13 +191,14 @@ describe 'swap_file::files' do
       end
       let(:facts) do
         {
-          operatingsystem: 'RedHat',
-          osfamily: 'RedHat',
-          operatingsystemrelease: '7',
-          concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
           swapfile_sizes: nil,
-          selinux: true,
+          swapfile_sizes_csv: "/mnt/swap.resizeme||#{existing_swap_kb}",
+          memory: { 'system' => {'total' => '1.00 GB'}},
+          os: {
+          'selinux' => { 'enabled' => 'true' },
+          'family' => 'RedHat',
+          'release' => { 'major' => '7'},
+          },
         }
       end
       it do
@@ -216,16 +217,16 @@ describe 'swap_file::files' do
       end
       let(:facts) do
         {
-          operatingsystem: 'RedHat',
-          osfamily: 'RedHat',
-          operatingsystemrelease: '7',
-          concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
+          memory: { 'system' => {'total' => '1.00 GB'}},
+          os: {
+          'selinux' => { 'enabled' => 'true' },
+          'family' => 'RedHat',
+          'release' => { 'major' => '7'},
+          },
           swapfile_sizes: {
             '/mnt/swap.differentname' => '204796', # 200MB
           },
           swapfile_sizes_csv: "/mnt/swap.differentname||#{existing_swap_kb}",
-          selinux: true,
         }
       end
       it do
@@ -254,14 +255,14 @@ describe 'swap_file::files' do
 
       let(:facts) do
         {
-          operatingsystem: 'RedHat',
-          osfamily: 'RedHat',
-          operatingsystemrelease: '7',
-          concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
+          memory: { 'system' => {'total' => '1.00 GB'}},
+          os: {
+          'selinux' => { 'enabled' => 'true' },
+          'family' => 'RedHat',
+          'release' => { 'major' => '7'}
+          },
           swapfile_sizes: "/mnt/swap.resizeme#{existing_swap_kb}",
           swapfile_sizes_csv: "/mnt/swap.resizeme||#{existing_swap_kb}",
-          selinux: true,
         }
       end
 
@@ -305,14 +306,14 @@ describe 'swap_file::files' do
       end
       let(:facts) do
         {
-          operatingsystem: 'RedHat',
-          osfamily: 'RedHat',
-          operatingsystemrelease: '7',
-          concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
+          memory: { 'system' => {'total' => '1.00 GB'}},
+          os: {
+          'selinux' => { 'enabled' => 'true' },
+          'family' => 'RedHat',
+          'release' => { 'major' => '7'}
+          },
           swapfile_sizes: nil,
           swapfile_sizes_csv: nil,
-          selinux: true,
         }
       end
       it do
@@ -331,14 +332,14 @@ describe 'swap_file::files' do
       end
       let(:facts) do
         {
-          operatingsystem: 'RedHat',
-          osfamily: 'RedHat',
-          operatingsystemrelease: '7',
-          concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
+          memory: { 'system' => {'total' => '1.00 GB'}},
+          os: {
+          'selinux' => { 'enabled' => 'true' },
+          'family' => 'RedHat',
+          'release' => { 'major' => '7'}
+          },
           swapfile_sizes: "/mnt/swap.differentname#{existing_swap_kb}",
           swapfile_sizes_csv: "/mnt/swap.differentname||#{existing_swap_kb}",
-          selinux: true,
         }
       end
       it do
