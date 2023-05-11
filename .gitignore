@@ -1,11 +1,13 @@
 .*.sw?
 pkg
+.bundle
 .rspec_system
 .vagrant/
 log/
 junit/
 .yar*
 doc/
+vendor/
 
 # Puppet
 coverage/

@@ -40,7 +40,7 @@
 # @author - Peter Souter
 #
 class swap_file (
-  $files             = {},
+  Hash $files             = {},
   $files_hiera_merge = false,
 ) {
 
@@ -50,7 +50,6 @@ class swap_file (
   } else {
     $files_hiera_merge_bool = str2bool($files_hiera_merge)
   }
-  validate_legacy(Boolean, 'validate_bool', $files_hiera_merge_bool)
 
   # functionality
   if $files_hiera_merge_bool == true {
@@ -58,8 +57,11 @@ class swap_file (
   } else {
     $files_real = $files
   }
-  if $files_real != undef {
-    validate_legacy(Hash, 'validate_hash', $files_real)
-    create_resources('swap_file::files', $files_real)
+  if $files_real =~ Hash {
+    $files_real.each | $_key, $_values | {
+      swap_file::files{$_key:
+        * => $_values,
+      }
+    }
   }
 }

@@ -2,8 +2,12 @@ require 'spec_helper'
 describe 'swap_file' do
   let(:facts) do
     {
-      :memorysize => '1.00 GB',
-      selinux: true,
+      memory: { 'system' => {'total' => '1.00 GB'}},
+      os: {
+        'selinux' => { 'enabled' => 'true' },
+        'family' => 'RedHat',
+      }
+
     }
   end
 
@@ -50,8 +54,11 @@ describe 'swap_file' do
       {
         :fqdn              => 'files',
         :parameter_tests   => 'files_hiera_merge',
-        :memorysize        => '1.00 GB',
-        :selinux           => true,
+        memory: { 'system' => {'total' => '1.00 GB'}},
+        os: {
+          'selinux' => { 'enabled' => 'true' },
+          'family' => 'RedHat',
+        }
       }
     end
 
@@ -105,9 +112,11 @@ describe 'swap_file' do
     # set needed custom facts and variables
     let(:facts) do
       {
-        :osfamily => 'RedHat',
-        :memorysize => '1.00 GB',
-        :selinux    => true,
+        memory: { 'system' => {'total' => '1.00 GB'}},
+        os: {
+          'selinux' => { 'enabled' => 'true' },
+          'family' => 'RedHat',
+        }
       }
     end
     let(:validation_params) do
