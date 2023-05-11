@@ -32,10 +32,10 @@
 #    @petems - Peter Souter
 #
 define swap_file::files (
-  $ensure        = 'present',
-  $swapfile      = '/mnt/swap.1',
+  Enum['absent', 'present'] $ensure = 'present',
+  String[1] $swapfile = '/mnt/swap.1',
   $swapfilesize  = $facts['memory']['system']['total'],
-  $add_mount     = true,
+  Boolean $add_mount = true,
   $options       = 'defaults',
   $timeout       = 300,
   $cmd           = 'dd',
@@ -45,10 +45,7 @@ define swap_file::files (
 )
 {
   # Parameter validation
-  validate_legacy(String, 'validate_re', $ensure, ['^absent$', '^present$'])
-  validate_legacy(String, 'validate_string', $swapfile)
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
-  validate_legacy(Boolean, 'validate_bool', $add_mount)
 
   if $ensure == 'present' {
 
