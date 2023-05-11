@@ -51,7 +51,7 @@ define swap_file::files (
 
     if ($resize_existing and $facts['swapfile_sizes']) {
 
-      if (is_hash($facts['swapfile_sizes'])) {
+      if ($facts['swapfile_sizes'] =~ Hash) {
 
         if (has_key($facts['swapfile_sizes'],$swapfile)) {
           ::swap_file::resize { $swapfile:
