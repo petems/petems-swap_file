@@ -34,7 +34,7 @@
 define swap_file::files (
   $ensure        = 'present',
   $swapfile      = '/mnt/swap.1',
-  $swapfilesize  = $::memorysize,
+  $swapfilesize  = $facts['memory']['system']['total'],
   $add_mount     = true,
   $options       = 'defaults',
   $timeout       = 300,
@@ -52,23 +52,23 @@ define swap_file::files (
 
   if $ensure == 'present' {
 
-    if ($resize_existing and $::swapfile_sizes) {
+    if ($resize_existing and $facts['swapfile_sizes']) {
 
-      if (is_hash($::swapfile_sizes)) {
+      if (is_hash($facts['swapfile_sizes'])) {
 
-        if (has_key($::swapfile_sizes,$swapfile)) {
+        if (has_key($facts['swapfile_sizes'],$swapfile)) {
           ::swap_file::resize { $swapfile:
             swapfile_path          => $swapfile,
             margin                 => $resize_margin,
             expected_swapfile_size => $swapfilesize,
-            actual_swapfile_size   => $::swapfile_sizes[$swapfile],
+            actual_swapfile_size   => $facts['swapfile_sizes'][$swapfile],
             verbose                => $resize_verbose,
             before                 => Exec["Create swap file ${swapfile}"],
           }
         }
 
       } else {
-        $existing_swapfile_size = swap_file_size_from_csv($swapfile,$::swapfile_sizes_csv)
+        $existing_swapfile_size = swap_file_size_from_csv($swapfile,$facts['swapfile_sizes_csv'])
         if ($existing_swapfile_size) {
           ::swap_file::resize { $swapfile:
             swapfile_path          => $swapfile,
@@ -104,7 +104,7 @@ define swap_file::files (
       require => Exec["Create swap file ${swapfile}"],
     }
 
-    if $::selinux {
+    if $facts['os']['selinux']['enabled'] {
       File[$swapfile] {
         seltype => 'swapfile_t',
       }
