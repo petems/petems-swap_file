@@ -53,7 +53,7 @@ define swap_file::files (
 
       if ($facts['swapfile_sizes'] =~ Hash) {
 
-        if (has_key($facts['swapfile_sizes'],$swapfile)) {
+        if ($swapfile in $facts['swapfile_sizes']) {
           ::swap_file::resize { $swapfile:
             swapfile_path          => $swapfile,
             margin                 => $resize_margin,
