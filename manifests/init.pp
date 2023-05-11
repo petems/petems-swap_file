@@ -58,6 +58,10 @@ class swap_file (
     $files_real = $files
   }
   if $files_real =~ Hash {
-    create_resources('swap_file::files', $files_real)
+    $files_real.each | $_key, $_values | {
+      swap_file::files{$_key:
+        * => $_values,
+      }
+    }
   }
 }
