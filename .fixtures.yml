@@ -2,7 +2,6 @@ fixtures:
   repositories:
     stdlib:
       repo: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
-      ref: 4.23.0
     augeasproviders_sysctl:
       repo: "git://github.com/hercules-team/augeasproviders_sysctl.git"
     augeasproviders_core:
