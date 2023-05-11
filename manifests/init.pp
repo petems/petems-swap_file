@@ -40,7 +40,7 @@
 # @author - Peter Souter
 #
 class swap_file (
-  $files             = {},
+  Hash $files             = {},
   $files_hiera_merge = false,
 ) {
 
