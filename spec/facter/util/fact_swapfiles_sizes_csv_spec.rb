@@ -1,14 +1,14 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Facter::Util::Fact do
-  before {
+  before(:each) do
     Facter.clear
-  }
+  end
 
   describe 'swapfile_sizes_csv' do
     context 'returns swapfile_sizes when present' do
-      before do
-        Facter.fact(:kernel).stubs(:value).returns("Linux")
+      before(:each) do
+        Facter.fact(:kernel).stubs(:value).returns('Linux')
         File.stubs(:exists?)
         File.expects(:exists?).with('/proc/swaps').returns(true)
         Facter::Util::Resolution.stubs(:exec)
@@ -26,8 +26,8 @@ Filename        Type    Size  Used  Priority
     end
 
     context 'returns nil when no swapfiles' do
-      before do
-        Facter.fact(:kernel).stubs(:value).returns("Linux")
+      before(:each) do
+        Facter.fact(:kernel).stubs(:value).returns('Linux')
         File.stubs(:exists?)
         File.expects(:exists?).with('/proc/swaps').returns(true)
         Facter::Util::Resolution.stubs(:exec)
@@ -41,6 +41,5 @@ Filename        Type    Size  Used  Priority
         expect(Facter.value(:swapfile_sizes_csv)).to eq(nil)
       end
     end
-
   end
 end

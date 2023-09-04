@@ -49,6 +49,7 @@ describe 'swap_file::files' do
         swapfilesize: '4.1 GB'
       }
     end
+
     it do
       is_expected.to compile.with_all_deps
     end
@@ -67,6 +68,7 @@ describe 'swap_file::files' do
         timeout: 900
       }
     end
+
     it do
       is_expected.to compile.with_all_deps
     end
@@ -85,6 +87,7 @@ describe 'swap_file::files' do
         timeout: 900
       }
     end
+
     it do
       is_expected.to compile.with_all_deps
     end
@@ -100,16 +103,20 @@ describe 'swap_file::files' do
       {
         swapfile: '/mnt/swap.3',
         swapfilesize: '4.1 GB',
-        cmd: 'fallocate'
+        cmd: 'fallocate',
       }
-      it do
-        is_expected.to compile.with_all_deps
-      end
-      is_expected.to contain_exec('Create swap file /mnt/swap.3')
-        .with(
+    end
+
+    it do
+      is_expected.to compile.with_all_deps
+    end
+    it do
+      is_expected.to contain_exec('Create swap file /mnt/swap.3').with(
+        {
           'command' => '/usr/bin/fallocate -l 4198M /mnt/swap.3',
-          'creates' => '/mnt/swap.3'
-        )
+          'creates' => '/mnt/swap.3',
+        },
+      )
     end
   end
 
@@ -119,13 +126,13 @@ describe 'swap_file::files' do
         cmd: 'invalid'
       }
     end
-    it 'should fail' do
-      expect { should contain_class(subject) }.to raise_error(Puppet::Error, /Invalid cmd: invalid - \(Must be \'dd\' or \'fallocate\'\)/)
+
+    it 'is_expected.to fail' do
+      expect { is_expected.to contain_class(:subject) }.to raise_error(Puppet::Error, %r{Invalid cmd: invalid - \(Must be \'dd\' or \'fallocate\'\)})
     end
   end
 
   context 'resize_existing => true' do
-
     let(:existing_swap_kb) { '204796' } # 200MB
 
     context 'when swapfile_sizes fact exists and matches path' do
@@ -155,7 +162,7 @@ describe 'swap_file::files' do
         is_expected.to compile.with_all_deps
       end
       it do
-        should contain_swap_file__resize('/mnt/swap.resizeme').with('swapfile_path' => '/mnt/swap.resizeme',
+        is_expected.to contain_swap_file__resize('/mnt/swap.resizeme').with('swapfile_path' => '/mnt/swap.resizeme',
                                                                     'margin'                 => '50MB',
                                                                     'expected_swapfile_size' => '1.00 GB',
                                                                     'actual_swapfile_size'   => existing_swap_kb,
@@ -200,11 +207,12 @@ describe 'swap_file::files' do
           selinux: true,
         }
       end
+
       it do
         is_expected.to compile.with_all_deps
       end
       it do
-        should_not contain_swap_file__resize('/mnt/swap.nofact')
+        is_expected.not_to contain_swap_file__resize('/mnt/swap.nofact')
       end
     end
     context 'when swapfile_sizes fact exits but file does not match' do
@@ -228,18 +236,20 @@ describe 'swap_file::files' do
           selinux: true,
         }
       end
+
       it do
         is_expected.to compile.with_all_deps
       end
       it do
-        is_expected.to contain_exec('Create swap file /mnt/swap.factbutnomatch')
-          .with(
+        is_expected.to contain_exec('Create swap file /mnt/swap.factbutnomatch').with(
+          {
             'command' => '/bin/dd if=/dev/zero of=/mnt/swap.factbutnomatch bs=1M count=1024',
-            'creates' => '/mnt/swap.factbutnomatch'
-          )
+            'creates' => '/mnt/swap.factbutnomatch',
+          },
+        )
       end
       it do
-        should_not contain_swap_file__resize('/mnt/swap.factbutnomatch')
+        is_expected.not_to contain_swap_file__resize('/mnt/swap.factbutnomatch')
       end
     end
     context 'when swapfile_sizes fact exists and matches path, but not hash' do
@@ -269,7 +279,7 @@ describe 'swap_file::files' do
         is_expected.to compile.with_all_deps
       end
       it do
-        should contain_swap_file__resize('/mnt/swap.resizeme').with('swapfile_path' => '/mnt/swap.resizeme',
+        is_expected.to contain_swap_file__resize('/mnt/swap.resizeme').with('swapfile_path' => '/mnt/swap.resizeme',
                                                                     'margin'                 => '50MB',
                                                                     'expected_swapfile_size' => '1.00 GB',
                                                                     'actual_swapfile_size'   => existing_swap_kb,
@@ -315,11 +325,12 @@ describe 'swap_file::files' do
           selinux: true,
         }
       end
+
       it do
         is_expected.to compile.with_all_deps
       end
       it do
-        should_not contain_swap_file__resize('/mnt/swap.nofact')
+        is_expected.not_to contain_swap_file__resize('/mnt/swap.nofact')
       end
     end
     context 'when swapfile_sizes fact exits but file does not match' do
@@ -341,20 +352,21 @@ describe 'swap_file::files' do
           selinux: true,
         }
       end
+
       it do
         is_expected.to compile.with_all_deps
       end
       it do
-        is_expected.to contain_exec('Create swap file /mnt/swap.factbutnomatch')
-          .with(
+        is_expected.to contain_exec('Create swap file /mnt/swap.factbutnomatch').with(
+          {
             'command' => '/bin/dd if=/dev/zero of=/mnt/swap.factbutnomatch bs=1M count=1024',
             'creates' => '/mnt/swap.factbutnomatch'
-          )
+          },
+        )
       end
       it do
-        should_not contain_swap_file__resize('/mnt/swap.factbutnomatch')
+        is_expected.not_to contain_swap_file__resize('/mnt/swap.factbutnomatch')
       end
     end
   end
-
 end
