@@ -2,8 +2,16 @@ require 'spec_helper'
 describe 'swap_file' do
   let(:facts) do
     {
-      memorysize: '1.00 GB',
-      selinux:    true,
+      memory: {
+        system: {
+          total: '1.00 GB',
+        }
+      },
+      os: {
+        selinux: {
+          enabled: true,
+        }
+      }
     }
   end
 
@@ -54,8 +62,16 @@ describe 'swap_file' do
       {
         fqdn:            'files',
         parameter_tests: 'files_hiera_merge',
-        memorysize:      '1.00 GB',
-        selinux:         true,
+        memory: {
+          system: {
+            total: '1.00 GB',
+          }
+        },
+        os: {
+          selinux: {
+            enabled: true,
+          }
+        }
       }
     end
 
@@ -120,8 +136,16 @@ describe 'swap_file' do
     let(:facts) do
       {
         osfamily:   'RedHat',
-        memorysize: '1.00 GB',
-        selinux:    true,
+        memory: {
+          system: {
+            total: '1.00 GB',
+          }
+        },
+        os: {
+          selinux: {
+            enabled: true,
+          }
+        }
       }
     end
     let(:validation_params) do
@@ -131,13 +155,13 @@ describe 'swap_file' do
     end
 
     validations = {
-      'bool_stringified' => {
+      'Boolean' => {
         name:    ['files_hiera_merge'],
-        valid:   [true, false, 'true', 'false'],
-        invalid: ['invalid', ['array'], { 'ha' => 'sh' }, 3, 2.42, nil],
-        message: '(Unknown type of boolean|str2bool\(\): (Requires either string to work with|Requires string to work with))',
+        valid:   [true, false],
+        invalid: ['invalid', 'false', ['array'], { 'ha' => 'sh' }, 3, 2.42, nil],
+        message: 'expects a Boolean',
       },
-      'hash' => {
+      'Hash' => {
         name:    ['files'],
         valid:   [{ 'swap' => { 'ensure' => 'present' } }],
         invalid: ['invalid', ['array'], 3, 2.42, true, false, nil],

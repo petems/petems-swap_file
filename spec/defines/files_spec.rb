@@ -9,8 +9,16 @@ describe 'swap_file::files' do
       osfamily: 'RedHat',
       operatingsystemrelease: '7',
       concat_basedir: '/tmp',
-      memorysize: '1.00 GB',
-      selinux: true,
+      memory: {
+        system: {
+          total: '1.00 GB',
+        }
+      },
+      os: {
+        selinux: {
+          enabled: true,
+        }
+      }
     }
   end
 
@@ -149,12 +157,20 @@ describe 'swap_file::files' do
           osfamily: 'RedHat',
           operatingsystemrelease: '7',
           concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
           swapfile_sizes: {
             '/mnt/swap.resizeme' => existing_swap_kb,
           },
           swapfile_sizes_csv: "/mnt/swap.resizeme||#{existing_swap_kb}",
-          selinux: true,
+          memory: {
+            system: {
+              total: '1.00 GB',
+            }
+          },
+          os: {
+            selinux: {
+              enabled: true,
+            }
+          }
         }
       end
 
@@ -202,9 +218,17 @@ describe 'swap_file::files' do
           osfamily: 'RedHat',
           operatingsystemrelease: '7',
           concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
           swapfile_sizes: nil,
-          selinux: true,
+          memory: {
+            system: {
+              total: '1.00 GB',
+            }
+          },
+          os: {
+            selinux: {
+              enabled: true,
+            }
+          }
         }
       end
 
@@ -228,12 +252,20 @@ describe 'swap_file::files' do
           osfamily: 'RedHat',
           operatingsystemrelease: '7',
           concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
           swapfile_sizes: {
             '/mnt/swap.differentname' => '204796', # 200MB
           },
           swapfile_sizes_csv: "/mnt/swap.differentname||#{existing_swap_kb}",
-          selinux: true,
+          memory: {
+            system: {
+              total: '1.00 GB',
+            }
+          },
+          os: {
+            selinux: {
+              enabled: true,
+            }
+          }
         }
       end
 
@@ -268,10 +300,18 @@ describe 'swap_file::files' do
           osfamily: 'RedHat',
           operatingsystemrelease: '7',
           concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
           swapfile_sizes: "/mnt/swap.resizeme#{existing_swap_kb}",
           swapfile_sizes_csv: "/mnt/swap.resizeme||#{existing_swap_kb}",
-          selinux: true,
+          memory: {
+            system: {
+              total: '1.00 GB',
+            }
+          },
+          os: {
+            selinux: {
+              enabled: true,
+            }
+          }
         }
       end
 
@@ -319,10 +359,18 @@ describe 'swap_file::files' do
           osfamily: 'RedHat',
           operatingsystemrelease: '7',
           concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
           swapfile_sizes: nil,
           swapfile_sizes_csv: nil,
-          selinux: true,
+          memory: {
+            system: {
+              total: '1.00 GB',
+            }
+          },
+          os: {
+            selinux: {
+              enabled: true,
+            }
+          }
         }
       end
 
@@ -346,10 +394,18 @@ describe 'swap_file::files' do
           osfamily: 'RedHat',
           operatingsystemrelease: '7',
           concat_basedir: '/tmp',
-          memorysize: '1.00 GB',
           swapfile_sizes: "/mnt/swap.differentname#{existing_swap_kb}",
           swapfile_sizes_csv: "/mnt/swap.differentname||#{existing_swap_kb}",
-          selinux: true,
+          memory: {
+            system: {
+              total: '1.00 GB',
+            }
+          },
+          os: {
+            selinux: {
+              enabled: true,
+            }
+          }
         }
       end
 
