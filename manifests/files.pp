@@ -47,13 +47,13 @@
 define swap_file::files (
   Enum['present', 'absent'] $ensure          = 'present',
   Stdlib::Absolutepath      $swapfile        = '/mnt/swap.1',
-  String                    $swapfilesize    = $facts['memory']['system']['total'],
+  String[1]                 $swapfilesize    = $facts['memory']['system']['total'],
   Boolean                   $add_mount       = true,
-  String                    $options         = 'defaults',
+  String[1]                 $options         = 'defaults',
   Integer                   $timeout         = 300,
-  String                    $cmd             = 'dd',
+  Enum['dd', 'fallocate']   $cmd             = 'dd',
   Boolean                   $resize_existing = false,
-  String                    $resize_margin   = '50MB',
+  String[1]                 $resize_margin   = '50MB',
   Boolean                   $resize_verbose  = false,
 ) {
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
@@ -87,21 +87,17 @@ define swap_file::files (
       }
     }
 
+    case $cmd {
+      'dd':    { $csf_command = "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}" }
+      default: { $csf_command = "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}" }
+    }
+
     exec { "Create swap file ${swapfile}":
+      command => $csf_command,
       creates => $swapfile,
       timeout => $timeout,
     }
-    case $cmd {
-      'dd': {
-        Exec["Create swap file ${swapfile}"] { command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}" }
-      }
-      'fallocate': {
-        Exec["Create swap file ${swapfile}"] { command => "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}" }
-      }
-      default: {
-        fail("Invalid cmd: ${cmd} - (Must be 'dd' or 'fallocate')")
-      }
-    }
+
     file { $swapfile:
       owner   => root,
       group   => root,
