@@ -13,7 +13,7 @@
 # @param num_a [Array] array of two numbers to compare
 # @param num_b [Float] the margin to compare the two numbers
 module Puppet::Parser::Functions
-  newfunction(:difference_within_margin, :type => :rvalue, :doc => <<-EOS
+  newfunction(:difference_within_margin, type: :rvalue, doc: <<-EOS
 Get's the difference between two numbers, with a third argument as a margin
 
 *Example:*
@@ -32,10 +32,11 @@ Would result in:
 
     EOS
   ) do |arguments|
-
     # Check that more than 2 arguments have been given ...
-    raise(Puppet::ParseError, "compare_with_margin(): Wrong number of arguments " +
-      "given (#{arguments.size} for 2)") unless arguments.size == 2
+    unless arguments.size == 2
+      raise(Puppet::ParseError, 'compare_with_margin(): Wrong number of arguments ' \
+        "given (#{arguments.size} for 2)")
+    end
 
     # Check that the first parameter is an array
     unless arguments[0].is_a?(Array)
@@ -47,15 +48,13 @@ Would result in:
       raise(Puppet::ParseError, 'difference_within_margin(): arg[0] array cannot be empty')
     end
 
-    arguments[0].collect! { |i| i.to_f }
+    arguments[0].map! { |i| i.to_f }
 
     difference = arguments[0].minmax[1].to_f - arguments[0].minmax[0].to_f
 
-    if difference < arguments[1].to_f
-      return true
-    else
-      return false
-    end
+    return true if difference < arguments[1].to_f
+
+    return false
   end
 end
 
