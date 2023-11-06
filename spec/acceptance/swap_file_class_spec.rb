@@ -1,10 +1,9 @@
 require 'spec_helper_acceptance'
 
-describe 'swap_file class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
-
+describe 'swap_file class', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   context 'swap_file' do
     context 'ensure => present' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
         class { 'swap_file':
           files => {
@@ -24,21 +23,17 @@ describe 'swap_file class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfa
         EOS
 
         # Run it twice and test for idempotency
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes  => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
-      it 'should contain the default swapfile' do
-        shell('/sbin/swapon -s | grep /mnt/swap.1', :acceptable_exit_codes => [0])
+      it 'contains the default swapfile' do
+        shell('/sbin/swapon -s | grep /mnt/swap.1', acceptable_exit_codes: [0])
+        shell('/sbin/swapon -s | grep /tmp/swapfile.fallocate', acceptable_exit_codes: [0])
       end
-      it 'should contain the default fstab setting' do
-        shell('cat /etc/fstab | grep /mnt/swap.1', :acceptable_exit_codes => [0])
-        shell('cat /etc/fstab | grep defaults', :acceptable_exit_codes => [0])
-      end
-      it 'should contain the default swapfile' do
-        shell('/sbin/swapon -s | grep /tmp/swapfile.fallocate', :acceptable_exit_codes => [0])
-      end
-      it 'should contain the default fstab setting' do
-        shell('cat /etc/fstab | grep /tmp/swapfile.fallocate', :acceptable_exit_codes => [0])
+      it 'contains the default fstab setting' do
+        shell('cat /etc/fstab | grep /mnt/swap.1', acceptable_exit_codes: [0])
+        shell('cat /etc/fstab | grep defaults', acceptable_exit_codes: [0])
+        shell('cat /etc/fstab | grep /tmp/swapfile.fallocate', acceptable_exit_codes: [0])
       end
     end
   end

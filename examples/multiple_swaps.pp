@@ -1,5 +1,5 @@
 node default {
-  class { '::swap_file':
+  class { 'swap_file':
     files => {
       'swapfile'         => {
         ensure => 'present', # lint:ignore:ensure_first_param

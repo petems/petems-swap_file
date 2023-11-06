@@ -2,8 +2,16 @@ require 'spec_helper'
 describe 'swap_file' do
   let(:facts) do
     {
-      :memorysize => '1.00 GB',
-      selinux: true,
+      memory: {
+        system: {
+          total: '1.00 GB',
+        }
+      },
+      os: {
+        selinux: {
+          enabled: true,
+        }
+      }
     }
   end
 
@@ -16,7 +24,7 @@ describe 'swap_file' do
   context 'with files set to valid hash' do
     let(:params) do
       {
-        :files => {
+        files: {
           'swap' => {
             'ensure' => 'present',
           },
@@ -33,70 +41,92 @@ describe 'swap_file' do
     it { is_expected.to have_resource_count(10) }
 
     it do
-      is_expected.to contain_swap_file__files('swap').with({
-        'ensure' => 'present',
-      })
+      is_expected.to contain_swap_file__files('swap').with(
+        {
+          'ensure' => 'present',
+        },
+      )
     end
 
     it do
-      is_expected.to contain_swap_file__files('test').with({
-        'swapfile' => '/mnt/test',
-      })
+      is_expected.to contain_swap_file__files('test').with(
+        {
+          'swapfile' => '/mnt/test',
+        },
+      )
     end
   end
 
   describe 'with data for swap_file::files provided in multiple hiera levels' do
     let(:facts) do
       {
-        :fqdn              => 'files',
-        :parameter_tests   => 'files_hiera_merge',
-        :memorysize        => '1.00 GB',
-        :selinux           => true,
+        fqdn:            'files',
+        parameter_tests: 'files_hiera_merge',
+        memory: {
+          system: {
+            total: '1.00 GB',
+          }
+        },
+        os: {
+          selinux: {
+            enabled: true,
+          }
+        }
       }
     end
 
     context 'when files_hiera_merge is set to the default value <false>' do
-      let(:params) { { :files_hiera_merge => false } }
+      let(:params) { { files_hiera_merge: false } }
+
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('swap_file') }
       it { is_expected.to have_resource_count(5) }
 
       it do
-        is_expected.to contain_swap_file__files('resource_name').with({
-          'ensure'   => 'present',
-          'swapfile' => '/mnt/swap',
-        })
+        is_expected.to contain_swap_file__files('resource_name').with(
+          {
+            'ensure'   => 'present',
+            'swapfile' => '/mnt/swap',
+          },
+        )
       end
     end
 
     context 'when files_hiera_merge is set to valid value <true>' do
-      let(:params) { { :files_hiera_merge => true } }
+      let(:params) { { files_hiera_merge: true } }
+
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('swap_file') }
       it { is_expected.to have_resource_count(15) }
 
       it do
-        is_expected.to contain_swap_file__files('resource_name').with({
-          'ensure'   => 'present',
-          'swapfile' => '/mnt/swap',
-        })
+        is_expected.to contain_swap_file__files('resource_name').with(
+          {
+            'ensure'   => 'present',
+            'swapfile' => '/mnt/swap',
+          },
+        )
       end
 
       it do
-        is_expected.to contain_swap_file__files('swap1').with({
-          'ensure'       => 'present',
-          'swapfile'     => '/mnt/swap.1',
-          'swapfilesize' => '1 GB',
-        })
+        is_expected.to contain_swap_file__files('swap1').with(
+          {
+            'ensure'       => 'present',
+            'swapfile'     => '/mnt/swap.1',
+            'swapfilesize' => '1 GB',
+          },
+        )
       end
 
       it do
-        is_expected.to contain_swap_file__files('swap2').with({
-          'ensure'       => 'present',
-          'swapfile'     => '/mnt/swap.2',
-          'swapfilesize' => '2 GB',
-          'cmd'          => 'fallocate',
-        })
+        is_expected.to contain_swap_file__files('swap2').with(
+          {
+            'ensure'       => 'present',
+            'swapfile'     => '/mnt/swap.2',
+            'swapfilesize' => '2 GB',
+            'cmd'          => 'fallocate',
+          },
+        )
       end
     end
   end
@@ -105,48 +135,57 @@ describe 'swap_file' do
     # set needed custom facts and variables
     let(:facts) do
       {
-        :osfamily => 'RedHat',
-        :memorysize => '1.00 GB',
-        :selinux    => true,
+        osfamily:   'RedHat',
+        memory: {
+          system: {
+            total: '1.00 GB',
+          }
+        },
+        os: {
+          selinux: {
+            enabled: true,
+          }
+        }
       }
     end
     let(:validation_params) do
       {
-        #:param => 'value',
+        # param: 'value',
       }
     end
 
     validations = {
-      'bool_stringified' => {
-        :name    => %w(files_hiera_merge),
-        :valid   => [true, false, 'true', 'false'],
-        :invalid => ['invalid', %w(array), { 'ha' => 'sh' }, 3, 2.42, nil],
-        :message => '(Unknown type of boolean|str2bool\(\): (Requires either string to work with|Requires string to work with))',
+      'Boolean' => {
+        name:    ['files_hiera_merge'],
+        valid:   [true, false],
+        invalid: ['invalid', 'false', ['array'], { 'ha' => 'sh' }, 3, 2.42, nil],
+        message: 'expects a Boolean',
       },
-      'hash' => {
-        :name    => %w(files),
-        :valid   => [{ 'swap' => { 'ensure' => 'present' } }],
-        :invalid => ['invalid', %w(array), 3, 2.42, true, false, nil],
-        :message => '(is not a Hash|expects a Hash value, got)',
+      'Hash' => {
+        name:    ['files'],
+        valid:   [{ 'swap' => { 'ensure' => 'present' } }],
+        invalid: ['invalid', ['array'], 3, 2.42, true, false, nil],
+        message: '(is not a Hash|expects a Hash value, got)',
       },
     }
 
     validations.sort.each do |type, var|
       var[:name].each do |var_name|
+        var[:params] = {} if var[:params].nil?
         var[:valid].each do |valid|
-          context "with #{var_name} (#{type}) set to valid #{valid} (as #{valid.class})" do
-            let(:params) { validation_params.merge({ :"#{var_name}" => valid, }) }
+          context "when #{var_name} (#{type}) is set to valid #{valid} (as #{valid.class})" do
+            let(:params) { [var[:params], { "#{var_name}": valid, }].reduce(:merge) }
+
             it { is_expected.to compile }
           end
         end
 
         var[:invalid].each do |invalid|
-          context "with #{var_name} (#{type}) set to invalid #{invalid} (as #{invalid.class})" do
-            let(:params) { validation_params.merge({ :"#{var_name}" => invalid, }) }
-            it 'should fail' do
-              expect do
-                is_expected.to contain_class(subject)
-              end.to raise_error(Puppet::Error, /#{var[:message]}/)
+          context "when #{var_name} (#{type}) is set to invalid #{invalid} (as #{invalid.class})" do
+            let(:params) { [var[:params], { "#{var_name}": invalid, }].reduce(:merge) }
+
+            it 'fail' do
+              expect { is_expected.to contain_class(:subject) }.to raise_error(Puppet::Error, %r{#{var[:message]}})
             end
           end
         end

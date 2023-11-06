@@ -2,7 +2,7 @@
 # swap_file_size_from_csv.rb
 #
 module Puppet::Parser::Functions
-  newfunction(:swap_file_size_from_csv, :type => :rvalue, :doc => <<-EOS
+  newfunction(:swap_file_size_from_csv, type: :rvalue, doc: <<-EOS
 Given a csv of swap files and sizes, split by pipe (||), we can determine the size in bytes of the swapfile
 Will return false if the swapfile is not found in the csv
 *Examples:*
@@ -12,8 +12,10 @@ Would return: 1019900
 Would return: false
     EOS
   ) do |arguments|
-    raise(Puppet::ParseError, "swap_file_size_from_csv(): Wrong number of arguments " +
-      "given (#{arguments.size} for 2)") if arguments.size < 2
+    if arguments.size < 2
+      raise(Puppet::ParseError, 'swap_file_size_from_csv(): Wrong number of arguments ' \
+        "given (#{arguments.size} for 2)")
+    end
     unless arguments[0].is_a? String
       raise(Puppet::ParseError, "swap_file_size_from_csv(): swapfile name but be a string (Got #{arguments[0].class}")
     end
@@ -24,8 +26,7 @@ Would return: false
 
     swapfile_found = false
 
-    lines.each do | swapfile_csv |
-      swapfile_csv_array = swapfile_csv.split(',')
+    lines.each do |swapfile_csv|
       swapfile_name = swapfile_csv.split('||')[0]
       swapfile_size = swapfile_csv.split('||')[1]
       swapfile_found = swapfile_size if arguments[0] == swapfile_name
