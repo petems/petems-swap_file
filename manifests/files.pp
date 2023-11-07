@@ -59,9 +59,9 @@ define swap_file::files (
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
 
   if $ensure == 'present' {
-    if ($resize_existing and $facts['swapfile_sizes']) {
-      if (is_hash($facts['swapfile_sizes'])) {
-        if (has_key($facts['swapfile_sizes'],$swapfile)) {
+    if $resize_existing and $facts['swapfile_sizes'] {
+      if is_hash($facts['swapfile_sizes']) {
+        if has_key($facts['swapfile_sizes'],$swapfile) {
           swap_file::resize { $swapfile:
             swapfile_path          => $swapfile,
             margin                 => $resize_margin,
@@ -74,7 +74,7 @@ define swap_file::files (
       } else {
         # use swapfile_sizes_csv facts as fallback for older Puppet clients
         $existing_swapfile_size = swap_file_size_from_csv($swapfile,$facts['swapfile_sizes_csv'])
-        if ($existing_swapfile_size) {
+        if $existing_swapfile_size {
           swap_file::resize { $swapfile:
             swapfile_path          => $swapfile,
             margin                 => $resize_margin,

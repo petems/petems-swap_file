@@ -35,9 +35,9 @@ define swap_file::resize (
   $existing_swapfile_bytes       = to_bytes("${actual_swapfile_size}kb")
   $expected_swapfile_size_bytes  = to_bytes($expected_swapfile_size)
 
-  if !($expected_swapfile_size_bytes == $existing_swapfile_bytes) {
-    if !(difference_within_margin([$existing_swapfile_bytes, $expected_swapfile_size_bytes],$margin_bytes)) {
-      if ($verbose) {
+  if $expected_swapfile_size_bytes != $existing_swapfile_bytes {
+    if !difference_within_margin([$existing_swapfile_bytes, $expected_swapfile_size_bytes],$margin_bytes) {
+      if $verbose {
         $alert_message = "Existing : ${existing_swapfile_bytes}B\nExpected: ${expected_swapfile_size_bytes}B\nMargin: ${margin_bytes}B"
         notify { "Resizing Swapfile Alert ${swapfile_path}":
           name => $alert_message,
