@@ -115,6 +115,7 @@ define swap_file::files (
       ensure  => 'present',
       require => File[$swapfile],
     }
+
     if $add_mount {
       mount { $swapfile:
         ensure  => present,
@@ -127,15 +128,18 @@ define swap_file::files (
       }
     }
   }
+
   elsif $ensure == 'absent' {
     swap_file { $swapfile:
       ensure  => 'absent',
     }
+
     file { $swapfile:
       ensure  => absent,
       backup  => false,
       require => Swap_file[$swapfile],
     }
+
     mount { $swapfile:
       ensure => absent,
       device => $swapfile,

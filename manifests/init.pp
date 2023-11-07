@@ -60,6 +60,7 @@ class swap_file (
   } else {
     $files_real = $files
   }
+
   if $files_real != undef {
     validate_legacy(Hash, 'validate_hash', $files_real)
     create_resources('swap_file::files', $files_real)
