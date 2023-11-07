@@ -92,6 +92,11 @@ define swap_file::files (
       default: { $csf_command = "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}" }
     }
 
+    case $facts['os']['selinux']['enabled'] {
+      true:    { $swapfile_seltype = 'swapfile_t' }
+      default: { $swapfile_seltype = undef }
+    }
+
     exec { "Create swap file ${swapfile}":
       command => $csf_command,
       creates => $swapfile,
@@ -102,13 +107,8 @@ define swap_file::files (
       owner   => root,
       group   => root,
       mode    => '0600',
+      seltype => $swapfile_seltype,
       require => Exec["Create swap file ${swapfile}"],
-    }
-
-    if $facts['os']['selinux']['enabled'] {
-      File[$swapfile] {
-        seltype => 'swapfile_t',
-      }
     }
 
     swap_file { $swapfile:
