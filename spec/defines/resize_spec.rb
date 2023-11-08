@@ -37,7 +37,7 @@ describe 'swap_file::resize' do
           {
             'command' => '/sbin/swapoff /mnt/swap.1',
             'onlyif'  => '/sbin/swapon -s | grep /mnt/swap.1',
-            'before'  => ['Exec[Purge /mnt/swap.1 for resize]'],
+            'before'  => 'Exec[Purge /mnt/swap.1 for resize]',
           },
         )
       end
@@ -81,7 +81,7 @@ describe 'swap_file::resize' do
           {
             'command' => '/sbin/swapoff /test/ing',
             'onlyif'  => '/sbin/swapon -s | grep /test/ing',
-            'before'  => ['Exec[Purge /test/ing for resize]'],
+            'before'  => 'Exec[Purge /test/ing for resize]',
           },
         )
       end
