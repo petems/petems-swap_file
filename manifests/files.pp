@@ -63,7 +63,7 @@ define swap_file::files (
     if $resize_existing and $facts['swapfile_sizes'] {
       # use $swapfile_sizes for new or $swapfile_sizes_csv as fallback for old Puppet clients
       $existing_swapfile_size = swap_file_size_from_csv($swapfile,$facts['swapfile_sizes_csv'])
-      if is_hash($facts['swapfile_sizes']) and has_key($facts['swapfile_sizes'],$swapfile) {
+      if $swapfile in $facts['swapfile_sizes'] {
         $actual_swapfile_size = $facts['swapfile_sizes'][$swapfile]
       } elsif $existing_swapfile_size {
         $actual_swapfile_size = $existing_swapfile_size
