@@ -46,19 +46,9 @@ class swap_file (
   Hash    $files             = {},
   Boolean $files_hiera_merge = false,
 ) {
-  # variable handling
-  if $files_hiera_merge =~ Boolean {
-    $files_hiera_merge_bool = $files_hiera_merge
-  } else {
-    $files_hiera_merge_bool = str2bool($files_hiera_merge)
-  }
-  validate_legacy(Boolean, 'validate_bool', $files_hiera_merge_bool)
-
-  # functionality
-  if $files_hiera_merge_bool == true {
-    $files_real = hiera_hash('swap_file::files', {})
-  } else {
-    $files_real = $files
+  case $files_hiera_merge {
+    true:    { $files_real = hiera_hash('swap_file::files', {}) }
+    default: { $files_real = $files }
   }
 
   if $files_real != undef {
