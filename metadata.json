@@ -7,6 +7,24 @@
   "source": "https://github.com/petems/petems-swap_file",
   "project_page": "https://github.com/petems/petems-swap_file",
   "issues_url": "https://github.com/petems/petems-swap_file/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.23.0 < 6.0.0"
+    },
+    {
+      "name": "puppetlabs/mount_core",
+      "version_requirement": ">= 1.0.0 < 2.0.0"
+    },
+    {
+      "name": "herculesteam/augeasproviders_sysctl",
+      "version_requirement": ">=2.1.0 < 3.0.0"
+    },
+    {
+      "name": "herculesteam/augeasproviders_core",
+      "version_requirement": ">=2.1.0 < 3.0.0"
+    }
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -34,7 +52,6 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "10.04",
         "12.04",
         "14.04"
       ]
@@ -46,22 +63,7 @@
       "version_requirement": ">= 4.0.0"
     }
   ],
-  "dependencies": [
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.23.0 < 6.0.0"
-    },
-    {
-      "name": "puppetlabs/mount_core",
-      "version_requirement": ">= 1.0.0 < 2.0.0"
-    },
-    {
-      "name": "herculesteam/augeasproviders_sysctl",
-      "version_requirement": ">=2.1.0 < 3.0.0"
-    },
-    {
-      "name": "herculesteam/augeasproviders_core",
-      "version_requirement": ">=2.1.0 < 3.0.0"
-    }
-  ]
+  "pdk-version": "3.0.0",
+  "template-url": "pdk-default#3.0.0",
+  "template-ref": "tags/3.0.0-0-g056e50d"
 }

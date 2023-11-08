@@ -2,118 +2,120 @@
 #
 # This is a defined type to create a swap_file
 #
-# == Parameters
-# [*ensure*]
+# @param ensure
 #   Allows creation or removal of swapspace and the corresponding file.
-# [*swapfile*]
+#
+# @param swapfile
 #   Location of swapfile, defaults to /mnt
-# [*swapfilesize*]
+#
+# @param swapfilesize
 #   Size of the swapfile as a string (eg. 10 MB, 1.2 GB).
 #   Defaults to $::memorysize fact on the node
-# [*add_mount*]
+#
+# @param add_mount
 #   Add a mount to the swapfile so it persists on boot
-# [*options*]
+#
+# @param options
 #   Mount options for the swapfile
-# [*timeout*]
+#
+# @param timeout
 #   dd command exec timeout.
 #   Defaults to 300
-# [*cmd*]
+#
+# @param cmd
 #   What command is used to create the file, dd or fallocate. dd is better tested and safer but fallocate is significantly faster.
 #   Defaults to dd
 #
-# == Examples
+# @param resize_existing
+#   Boolean to choose if existing swap files should get resized.
 #
+# @param resize_margin
+#   Margin that is checked before resizing the swapfile.
+#
+# @param resize_verbose
+#   Boolean to choose if a notify message to explain the change should be added.
+#
+# @examples
 #   swap_file::files { 'default':
 #     ensure   => present,
 #     swapfile => '/mnt/swap.55',
 #   }
 #
-# == Authors
+# @author
 #    @petems - Peter Souter
 #
 define swap_file::files (
-  $ensure        = 'present',
-  $swapfile      = '/mnt/swap.1',
-  $swapfilesize  = $::memorysize,
-  $add_mount     = true,
-  $options       = 'defaults',
-  $timeout       = 300,
-  $cmd           = 'dd',
-  $resize_existing = false,
-  $resize_margin   = '50MB',
-  $resize_verbose  = false,
-)
-{
-  # Parameter validation
-  validate_legacy(String, 'validate_re', $ensure, ['^absent$', '^present$'])
-  validate_legacy(String, 'validate_string', $swapfile)
+  Enum['present', 'absent'] $ensure          = 'present',
+  Stdlib::Absolutepath      $swapfile        = '/mnt/swap.1',
+  String[1]                 $swapfilesize    = $facts['memory']['system']['total'],
+  Boolean                   $add_mount       = true,
+  String[1]                 $options         = 'defaults',
+  Integer                   $timeout         = 300,
+  Enum['dd', 'fallocate']   $cmd             = 'dd',
+  Boolean                   $resize_existing = false,
+  String[1]                 $resize_margin   = '50MB',
+  Boolean                   $resize_verbose  = false,
+) {
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
-  validate_legacy(Boolean, 'validate_bool', $add_mount)
 
   if $ensure == 'present' {
-
-    if ($resize_existing and $::swapfile_sizes) {
-
-      if (is_hash($::swapfile_sizes)) {
-
-        if (has_key($::swapfile_sizes,$swapfile)) {
-          ::swap_file::resize { $swapfile:
-            swapfile_path          => $swapfile,
-            margin                 => $resize_margin,
-            expected_swapfile_size => $swapfilesize,
-            actual_swapfile_size   => $::swapfile_sizes[$swapfile],
-            verbose                => $resize_verbose,
-            before                 => Exec["Create swap file ${swapfile}"],
-          }
-        }
-
+    # Check for resizing the swap file
+    if $resize_existing and $facts['swapfile_sizes'] {
+      # use $swapfile_sizes for new or $swapfile_sizes_csv as fallback for old Puppet clients
+      $existing_swapfile_size = swap_file_size_from_csv($swapfile,$facts['swapfile_sizes_csv'])
+      if $swapfile in $facts['swapfile_sizes'] {
+        $actual_swapfile_size = $facts['swapfile_sizes'][$swapfile]
+      } elsif $existing_swapfile_size {
+        $actual_swapfile_size = $existing_swapfile_size
       } else {
-        $existing_swapfile_size = swap_file_size_from_csv($swapfile,$::swapfile_sizes_csv)
-        if ($existing_swapfile_size) {
-          ::swap_file::resize { $swapfile:
-            swapfile_path          => $swapfile,
-            margin                 => $resize_margin,
-            expected_swapfile_size => $swapfilesize,
-            actual_swapfile_size   => $existing_swapfile_size,
-            verbose                => $resize_verbose,
-            before                 => Exec["Create swap file ${swapfile}"],
-          }
+        $actual_swapfile_size = undef
+      }
+
+      if $actual_swapfile_size {
+        swap_file::resize { $swapfile:
+          swapfile_path          => $swapfile,
+          margin                 => $resize_margin,
+          expected_swapfile_size => $swapfilesize,
+          actual_swapfile_size   => $actual_swapfile_size,
+          verbose                => $resize_verbose,
+          before                 => Exec["Create swap file ${swapfile}"],
         }
       }
     }
 
+    # Determine the command based on $cmd
+    case $cmd {
+      'dd':    { $csf_command = "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}" }
+      default: { $csf_command = "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}" }
+    }
+
+    # Determine $swapfile_seltype based on SELinux status
+    case $facts['os']['selinux']['enabled'] {
+      true:    { $swapfile_seltype = 'swapfile_t' }
+      default: { $swapfile_seltype = undef }
+    }
+
+    # Create the swap file
     exec { "Create swap file ${swapfile}":
+      command => $csf_command,
       creates => $swapfile,
       timeout => $timeout,
     }
-    case $cmd {
-      'dd': {
-        Exec["Create swap file ${swapfile}"] { command => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}" }
-      }
-      'fallocate': {
-        Exec["Create swap file ${swapfile}"] { command => "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}" }
-      }
-      default: {
-        fail("Invalid cmd: ${cmd} - (Must be 'dd' or 'fallocate')")
-      }
-    }
+
     file { $swapfile:
       owner   => root,
       group   => root,
       mode    => '0600',
+      seltype => $swapfile_seltype,
       require => Exec["Create swap file ${swapfile}"],
-    }
-
-    if $::selinux {
-      File[$swapfile] {
-        seltype => 'swapfile_t',
-      }
     }
 
     swap_file { $swapfile:
       ensure  => 'present',
       require => File[$swapfile],
     }
+
+    # Add mount if required
     if $add_mount {
       mount { $swapfile:
         ensure  => present,
@@ -125,16 +127,18 @@ define swap_file::files (
         require => Swap_file[$swapfile],
       }
     }
-  }
-  elsif $ensure == 'absent' {
+  } else {
+    # Remove the swap file, file, and mount
     swap_file { $swapfile:
       ensure  => 'absent',
     }
+
     file { $swapfile:
       ensure  => absent,
       backup  => false,
       require => Swap_file[$swapfile],
     }
+
     mount { $swapfile:
       ensure => absent,
       device => $swapfile,
