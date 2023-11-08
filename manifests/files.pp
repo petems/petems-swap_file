@@ -59,10 +59,10 @@ define swap_file::files (
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
 
   if $ensure == 'present' {
+    # Check for resizing the swap file
     if $resize_existing and $facts['swapfile_sizes'] {
-      # use swapfile_sizes_csv facts as fallback for older Puppet clients
+      # use $swapfile_sizes for new or $swapfile_sizes_csv as fallback for old Puppet clients
       $existing_swapfile_size = swap_file_size_from_csv($swapfile,$facts['swapfile_sizes_csv'])
-
       if is_hash($facts['swapfile_sizes']) and has_key($facts['swapfile_sizes'],$swapfile) {
         $actual_swapfile_size = $facts['swapfile_sizes'][$swapfile]
       } elsif $existing_swapfile_size {
@@ -83,16 +83,19 @@ define swap_file::files (
       }
     }
 
+    # Determine the command based on $cmd
     case $cmd {
       'dd':    { $csf_command = "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=${swapfilesize_mb}" }
       default: { $csf_command = "/usr/bin/fallocate -l ${swapfilesize_mb}M ${swapfile}" }
     }
 
+    # Determine $swapfile_seltype based on SELinux status
     case $facts['os']['selinux']['enabled'] {
       true:    { $swapfile_seltype = 'swapfile_t' }
       default: { $swapfile_seltype = undef }
     }
 
+    # Create the swap file
     exec { "Create swap file ${swapfile}":
       command => $csf_command,
       creates => $swapfile,
@@ -112,6 +115,7 @@ define swap_file::files (
       require => File[$swapfile],
     }
 
+    # Add mount if required
     if $add_mount {
       mount { $swapfile:
         ensure  => present,
@@ -124,6 +128,7 @@ define swap_file::files (
       }
     }
   } else {
+    # Remove the swap file, file, and mount
     swap_file { $swapfile:
       ensure  => 'absent',
     }
