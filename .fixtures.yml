@@ -8,5 +8,3 @@ fixtures:
       repo: "https://github.com/hercules-team/augeasproviders_core.git"
     mount_core:
       repo: "https://github.com/puppetlabs/puppetlabs-mount_core.git"
-  symlinks:
-    swap_file: "#{source_dir}"
