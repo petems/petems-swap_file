@@ -123,9 +123,7 @@ define swap_file::files (
         require => Swap_file[$swapfile],
       }
     }
-  }
-
-  elsif $ensure == 'absent' {
+  } else {
     swap_file { $swapfile:
       ensure  => 'absent',
     }
