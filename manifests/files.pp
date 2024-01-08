@@ -32,23 +32,18 @@
 #    @petems - Peter Souter
 #
 define swap_file::files (
-  $ensure        = 'present',
-  $swapfile      = '/mnt/swap.1',
-  $swapfilesize  = $::memorysize,
-  $add_mount     = true,
-  $options       = 'defaults',
-  $timeout       = 300,
-  $cmd           = 'dd',
-  $resize_existing = false,
-  $resize_margin   = '50MB',
-  $resize_verbose  = false,
-)
-{
-  # Parameter validation
-  validate_legacy(String, 'validate_re', $ensure, ['^absent$', '^present$'])
-  validate_legacy(String, 'validate_string', $swapfile)
+  Enum['present','absent'] $ensure          = 'present',
+  Stdlib::Absolutefile     $swapfile        = '/mnt/swap.1',
+  String                   $swapfilesize    = $::memorysize,
+  String                   $options         = 'defaults',
+  String                   $cmd             = 'dd',
+  String                   $resize_margin   = '50MB',
+  Integer                  $timeout         = 300,
+  Boolean                  $add_mount       = true,
+  Boolean                  $resize_existing = false,
+  Boolean                  $resize_verbose  = false,
+) {
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
-  validate_legacy(Boolean, 'validate_bool', $add_mount)
 
   if $ensure == 'present' {
 
