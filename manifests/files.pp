@@ -46,12 +46,9 @@ define swap_file::files (
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
 
   if $ensure == 'present' {
-
     if ($resize_existing and $::swapfile_sizes) {
-
-      if (is_hash($::swapfile_sizes)) {
-
-        if (has_key($::swapfile_sizes,$swapfile)) {
+      if $::swapfile_sizes =~ Hash {
+        if $swapfile in $::swapfile_sizes {
           ::swap_file::resize { $swapfile:
             swapfile_path          => $swapfile,
             margin                 => $resize_margin,
@@ -61,7 +58,6 @@ define swap_file::files (
             before                 => Exec["Create swap file ${swapfile}"],
           }
         }
-
       } else {
         $existing_swapfile_size = swap_file_size_from_csv($swapfile,$::swapfile_sizes_csv)
         if ($existing_swapfile_size) {
