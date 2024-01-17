@@ -16,5 +16,4 @@ class swap_file::swappiness (
     ensure => 'present',
     value  => $swappiness,
   }
-
 }

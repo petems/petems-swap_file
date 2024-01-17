@@ -33,8 +33,8 @@
 #
 define swap_file::files (
   Enum['present','absent'] $ensure          = 'present',
-  Stdlib::Absolutefile     $swapfile        = '/mnt/swap.1',
-  String                   $swapfilesize    = $::memorysize,
+  Stdlib::Absolutepath     $swapfile        = '/mnt/swap.1',
+  String                   $swapfilesize    = $facts['memory']['system']['total'],
   String                   $options         = 'defaults',
   String                   $cmd             = 'dd',
   String                   $resize_margin   = '50MB',
@@ -46,20 +46,20 @@ define swap_file::files (
   $swapfilesize_mb = to_bytes($swapfilesize) / 1048576
 
   if $ensure == 'present' {
-    if ($resize_existing and $::swapfile_sizes) {
-      if $::swapfile_sizes =~ Hash {
-        if $swapfile in $::swapfile_sizes {
+    if ($resize_existing and $facts['swapfile_sizes']) {
+      if $facts['swapfile_sizes'] =~ Hash {
+        if $swapfile in $facts['swapfile_sizes'] {
           ::swap_file::resize { $swapfile:
             swapfile_path          => $swapfile,
             margin                 => $resize_margin,
             expected_swapfile_size => $swapfilesize,
-            actual_swapfile_size   => $::swapfile_sizes[$swapfile],
+            actual_swapfile_size   => $facts['swapfile_sizes[$swapfile]'],
             verbose                => $resize_verbose,
             before                 => Exec["Create swap file ${swapfile}"],
           }
         }
       } else {
-        $existing_swapfile_size = swap_file_size_from_csv($swapfile,$::swapfile_sizes_csv)
+        $existing_swapfile_size = swap_file_size_from_csv($swapfile,$facts['swapfile_sizes_csv'])
         if ($existing_swapfile_size) {
           ::swap_file::resize { $swapfile:
             swapfile_path          => $swapfile,
@@ -95,7 +95,7 @@ define swap_file::files (
       require => Exec["Create swap file ${swapfile}"],
     }
 
-    if $::selinux {
+    if $facts['os']['selinux']['enabled'] {
       File[$swapfile] {
         seltype => 'swapfile_t',
       }

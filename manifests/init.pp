@@ -44,7 +44,7 @@ class swap_file (
   Variant[Enum['Y','y','1','T','t','TRUE','true','0','F','f','N','n','false','FALSE'], Boolean] $files_hiera_merge = false,
 ) {
   if str2bool($files_hiera_merge) {
-    $files_real = lookup('swap_file::files', Hash, { strategy => 'hash' }) 
+    $files_real = lookup('swap_file::files', Hash, { strategy => 'hash' })
   } else {
     $files_real = $files
   }
